@@ -4,7 +4,7 @@ const teamMembers = [
     {
         name: "João Souza",
         role: "Capitão",
-        image: "assets/images/jao.webp",
+        image: "assets/images/joao_not_white.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
