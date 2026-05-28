@@ -2,19 +2,28 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>UniRobot - Equipe de Robótica</title>
+    
+    <!-- CSS Files -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
     <!-- Header / Navigation -->
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <img src="assets/images/logo.png" alt="UniRobot Logo" class="logo-img">
+                <img src="assets/images/logo.png" alt="UniRobot Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/150x50/00a8ff/ffffff?text=UniRobot'">
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link active">Início</a></li>
@@ -61,17 +70,17 @@
                             <p>Competições</p>
                         </div>
                         <div class="stat">
-                            <h3>12</h3>
+                            <h3>24</h3>
                             <p>Membros</p>
                         </div>
                         <div class="stat">
-                            <h3>3</h3>
+                            <h3>5+</h3>
                             <p>Prêmios</p>
                         </div>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="assets/images/hero-bg.jpg" alt="Equipe UniRobot">
+                    <img src="assets/images/hero-bg.jpg" alt="Equipe UniRobot" onerror="this.src='equipe.webp'">
                 </div>
             </div>
         </div>
@@ -85,11 +94,34 @@
         </div>
     </section>
 
-    <!-- Team Section -->
+    <!-- Team Section com Carrossel -->
     <section id="team" class="team">
         <div class="container">
             <h2 class="section-title">Nossa Equipe</h2>
-            <div id="team-grid" class="team-grid"></div>
+            
+            <!-- Category Navigation -->
+            <div class="category-nav" id="categoryNav"></div>
+            
+            <!-- Carousel Controls -->
+            <div class="carousel-controls">
+                <button class="carousel-prev" id="carouselPrev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="play-pause-btn" id="playPauseBtn" aria-label="Play/Pause">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="carousel-next" id="carouselNext" aria-label="Próximo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Swiper Container -->
+            <div class="swiper team-swiper">
+                <div class="swiper-wrapper" id="team-grid">
+                    <!-- Team members will be inserted here -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
     </section>
 
@@ -99,16 +131,16 @@
             <h2 class="section-title">Nossos Patrocinadores</h2>
             <div class="sponsors-grid">
                 <div class="sponsor-card">
-                    <img src="assets/images/sponsor1.png" alt="Patrocinador 1">
+                    <img src="assets/images/sponsor1.png" alt="Patrocinador 1" onerror="this.src='https://via.placeholder.com/200x100/00a8ff/ffffff?text=Patrocinador'">
                 </div>
                 <div class="sponsor-card">
-                    <img src="assets/images/sponsor2.png" alt="Patrocinador 2">
+                    <img src="assets/images/sponsor2.png" alt="Patrocinador 2" onerror="this.src='https://via.placeholder.com/200x100/9c88ff/ffffff?text=Patrocinador'">
                 </div>
                 <div class="sponsor-card">
-                    <img src="assets/images/sponsor3.png" alt="Patrocinador 3">
+                    <img src="assets/images/sponsor3.png" alt="Patrocinador 3" onerror="this.src='https://via.placeholder.com/200x100/00a8ff/ffffff?text=Patrocinador'">
                 </div>
                 <div class="sponsor-card">
-                    <img src="assets/images/sponsor4.png" alt="Patrocinador 4">
+                    <img src="assets/images/sponsor4.png" alt="Patrocinador 4" onerror="this.src='https://via.placeholder.com/200x100/9c88ff/ffffff?text=Patrocinador'">
                 </div>
             </div>
             <div class="sponsor-message">
@@ -195,7 +227,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="assets/images/logo.svg" alt="UniRobot">
+                    <img src="assets/images/logo.svg" alt="UniRobot" onerror="this.src='https://via.placeholder.com/50x50/00a8ff/ffffff?text=UR'">
                     <p>Construindo o futuro com robótica e inovação.</p>
                 </div>
                 <div class="footer-links">
@@ -231,7 +263,8 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/contact.js"></script>
 </body>
 </html>

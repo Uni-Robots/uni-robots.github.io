@@ -8,8 +8,7 @@
         font-size: 2rem;
     }
     
-    .projects-grid,
-    .team-grid {
+    .projects-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -70,14 +69,54 @@
         justify-content: space-around;
     }
     
-    .projects-grid,
-    .team-grid,
-    .sponsors-grid,
-    .social-grid {
+    .about-content,
+    .contact-container {
         grid-template-columns: 1fr;
     }
     
-    .contact-container {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    /* Team carousel mobile */
+    .members-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .category-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .carousel-controls {
+        gap: 0.8rem;
+    }
+    
+    .carousel-prev,
+    .carousel-next,
+    .play-pause-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    
+    .category-nav-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .member-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .sponsors-grid,
+    .social-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -94,5 +133,28 @@
     
     .stat h3 {
         font-size: 1.5rem;
+    }
+    
+    .category-nav {
+        gap: 0.5rem;
+    }
+    
+    .category-nav-btn {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Tablet landscape for team */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .members-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .members-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

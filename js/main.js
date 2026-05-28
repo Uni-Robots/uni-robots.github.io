@@ -15,11 +15,11 @@ const teamMembers = [
     },
     // Gestores
     {
-    name: "Felipe Grabias",
-    role: "Gestor de Montagem",
-    image: "assets/images/grabias.webp",  // ← remove o src=
-    social: { linkedin: "#", github: "#" }
-},
+        name: "Felipe Grabias",
+        role: "Gestor de Montagem",
+        image: "assets/images/grabias.webp",
+        social: { linkedin: "#", github: "#" }
+    },
     {
         name: "Gustavo Britto Triaquim",
         role: "Gestor de Eletrônica",
@@ -46,6 +46,12 @@ const teamMembers = [
         social: { linkedin: "#", github: "#" }
     },
     {
+        name: "Felipe Santos",
+        role: "Membro de Programação",
+        image: "assets/images/felipe.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+    {
         name: "Jean Pierre Franz",
         role: "Membro de Programação",
         image: "assets/images/jean.webp",
@@ -55,12 +61,6 @@ const teamMembers = [
         name: "Maria Eduarda Wons",
         role: "Membro de Programação",
         image: "assets/images/maria.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Felipe Santos",
-        role: "Membro de Programação",
-        image: "assets/images/felipe.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
@@ -188,6 +188,9 @@ const projects = [
 // Render projects
 function renderProjects() {
     const projectsGrid = document.getElementById('projects-grid');
+    if (!projectsGrid) return;
+    
+    projectsGrid.innerHTML = '';
     
     projects.forEach(project => {
         const projectCard = document.createElement('div');
@@ -203,144 +206,322 @@ function renderProjects() {
     });
 }
 
+// Helper function to get random color for placeholder
+function getRandomColor() {
+    const colors = ['00a8ff', '9c88ff', '4cd964', 'ff3b30', 'ff9500', 'ffcc00'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Create member card
+function createMemberCard(member) {
+    const memberCard = document.createElement('div');
+    memberCard.className = 'team-member';
+    const placeholderColor = getRandomColor();
+    
+    memberCard.innerHTML = `
+        <div class="member-image">
+            <img src="${member.image}" 
+                 alt="${member.name}" 
+                 loading="lazy"
+                 onerror="this.src='https://via.placeholder.com/150/${placeholderColor}/ffffff?text=${member.name.charAt(0)}'; this.onerror=null;">
+        </div>
+        <h3>${member.name}</h3>
+        <p>${member.role}</p>
+        <div class="member-social">
+            <a href="${member.social.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="${member.social.github}" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    `;
+    return memberCard;
+}
+
 // Render team members
 function renderTeamMembers() {
     const teamGrid = document.getElementById('team-grid');
+    if (!teamGrid) return;
     
-    teamMembers.forEach(member => {
-        const memberCard = document.createElement('div');
-        memberCard.className = 'team-member';
-        memberCard.innerHTML = `
-            <div class="member-image">
-                <img src="${member.image}" alt="${member.name}">
-            </div>
-            <h3>${member.name}</h3>
-            <p>${member.role}</p>
-            <div class="member-social">
-                <a href="${member.social.linkedin}"><i class="fab fa-linkedin"></i></a>
-                <a href="${member.social.github}"><i class="fab fa-github"></i></a>
-            </div>
-        `;
-        teamGrid.appendChild(memberCard);
+    teamGrid.innerHTML = '';
+    
+    const categories = {
+        '👑 Liderança': teamMembers.filter(m => m.role === 'Capitão' || m.role === 'Vice-Capitão'),
+        '📊 Gestores': teamMembers.filter(m => m.role.includes('Gestor')),
+        '💻 Programação': teamMembers.filter(m => m.role === 'Membro de Programação'),
+        '🔧 Montagem': teamMembers.filter(m => m.role === 'Membro de Montagem'),
+        '📢 Marketing': teamMembers.filter(m => m.role === 'Membro de Marketing')
+    };
+    
+    Object.entries(categories).forEach(([category, members]) => {
+        if (members.length === 0) return;
+        
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        
+        const categoryHeader = document.createElement('div');
+        categoryHeader.className = 'category-header';
+        categoryHeader.innerHTML = `<h3>${category}</h3><span class="member-count">${members.length} membro${members.length > 1 ? 's' : ''}</span>`;
+        slide.appendChild(categoryHeader);
+        
+        const membersGrid = document.createElement('div');
+        membersGrid.className = 'members-grid';
+        
+        members.forEach(member => {
+            membersGrid.appendChild(createMemberCard(member));
+        });
+        
+        slide.appendChild(membersGrid);
+        teamGrid.appendChild(slide);
     });
 }
 
-// Initialize on page load
+// Swiper instance
+let swiperInstance = null;
+let isPlaying = true;
+
+// Initialize carousel
+function initTeamCarousel() {
+    if (typeof Swiper === 'undefined') {
+        console.error('Swiper not loaded!');
+        return;
+    }
+    
+    const swiperContainer = document.querySelector('.team-swiper');
+    if (!swiperContainer) {
+        console.error('Swiper container not found!');
+        return;
+    }
+    
+    if (swiperInstance) {
+        swiperInstance.destroy(true, true);
+    }
+    
+    swiperInstance = new Swiper('.team-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true,
+        },
+        navigation: {
+            nextEl: '#carouselNext',
+            prevEl: '#carouselPrev',
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            stopOnLastSlide: false,
+        },
+        loop: true,
+        grabCursor: true,
+        effect: 'slide',
+        speed: 600,
+        autoHeight: true,
+        on: {
+            init: function() {
+                console.log('Swiper initialized!');
+                updateCategoryButtons(this.activeIndex);
+            },
+            slideChange: function() {
+                updateCategoryButtons(this.activeIndex);
+            },
+            autoplayStart: function() {
+                isPlaying = true;
+                updatePlayPauseButton(true);
+            },
+            autoplayStop: function() {
+                isPlaying = false;
+                updatePlayPauseButton(false);
+            }
+        }
+    });
+    
+    createCategoryNavigation();
+    setupPlayPauseButton();
+}
+
+// Create category navigation
+function createCategoryNavigation() {
+    const categoryNav = document.getElementById('categoryNav');
+    if (!categoryNav) return;
+    
+    const categories = ['👑 Liderança', '📊 Gestores', '💻 Programação', '🔧 Montagem', '📢 Marketing'];
+    
+    categoryNav.innerHTML = '';
+    
+    categories.forEach((category, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'category-nav-btn';
+        btn.textContent = category;
+        btn.addEventListener('click', () => {
+            if (swiperInstance) {
+                swiperInstance.slideToLoop(index);
+                document.querySelectorAll('.category-nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
+        categoryNav.appendChild(btn);
+    });
+}
+
+function updateCategoryButtons(activeIndex) {
+    const btns = document.querySelectorAll('.category-nav-btn');
+    btns.forEach((btn, index) => {
+        if (index === activeIndex) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+function setupPlayPauseButton() {
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    if (!playPauseBtn) return;
+    
+    playPauseBtn.addEventListener('click', () => {
+        if (swiperInstance && swiperInstance.autoplay) {
+            if (isPlaying) {
+                swiperInstance.autoplay.stop();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                isPlaying = false;
+            } else {
+                swiperInstance.autoplay.start();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                isPlaying = true;
+            }
+        }
+    });
+}
+
+function updatePlayPauseButton(playing) {
+    const btn = document.getElementById('playPauseBtn');
+    if (btn) {
+        if (playing) {
+            btn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            btn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    }
+}
+
+// Mobile menu
+function initMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+}
+
+// Smooth scroll
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+// Header scroll effect
+function initHeaderScroll() {
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(26, 26, 46, 0.95)';
+        } else {
+            header.style.background = 'rgba(26, 26, 46, 0.95)';
+        }
+    });
+}
+
+// Form handlers
+function initForms() {
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = newsletterForm.querySelector('input');
+            if (input) {
+                input.placeholder = '✅ Inscrito!';
+                input.value = '';
+                setTimeout(() => input.placeholder = 'Seu e-mail', 2000);
+            }
+        });
+    }
+    
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            contactForm.reset();
+        });
+    }
+}
+
+// Scroll animations
+function initScrollAnimations() {
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.project-card, .team-member, .sponsor-card, .social-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// Initialize everything
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded - initializing...');
+    
     renderProjects();
     renderTeamMembers();
-});
-
-// Mobile menu toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-}
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-// Active link highlighting on scroll
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
-
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Header background change on scroll
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        header.style.background = 'rgba(26, 26, 46, 0.95)';
-        header.style.backdropFilter = 'blur(10px)';
-    } else {
-        header.style.background = 'rgba(26, 26, 46, 0.95)';
-    }
-});
-
-// Newsletter form submission
-const newsletterForm = document.getElementById('newsletterForm');
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const emailInput = newsletterForm.querySelector('input[type="email"]');
-        const email = emailInput.value;
-        
-        if (email) {
-            // You can integrate with your email service here
-            showNewsletterSuccess(emailInput);
-        }
-    });
-}
-
-function showNewsletterSuccess(input) {
-    const originalPlaceholder = input.placeholder;
-    input.placeholder = "Inscrito com sucesso!";
-    input.value = '';
     
     setTimeout(() => {
-        input.placeholder = originalPlaceholder;
-    }, 3000);
-}
+        initTeamCarousel();
+    }, 100);
+    
+    initMobileMenu();
+    initSmoothScroll();
+    initHeaderScroll();
+    initForms();
+    initScrollAnimations();
+});
 
-// Animation on scroll (simple fade-in)
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+// Handle resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (swiperInstance) {
+            swiperInstance.update();
         }
-    });
-}, observerOptions);
-
-// Observe elements for fade-in animation
-document.querySelectorAll('.project-card, .team-member, .sponsor-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease';
-    observer.observe(el);
+    }, 250);
 });
