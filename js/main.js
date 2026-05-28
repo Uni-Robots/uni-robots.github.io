@@ -541,24 +541,48 @@ function getRandomColor() {
 
 // Create member card
 function createMemberCard(member) {
+
     const memberCard = document.createElement('div');
     memberCard.className = 'team-member';
+
     const placeholderColor = getRandomColor();
-    
+
     memberCard.innerHTML = `
         <div class="member-image">
-            <img src="${member.image}" 
-                 alt="${member.name}" 
-                 loading="lazy"
-                 onerror="this.src='https://via.placeholder.com/150/${placeholderColor}/ffffff?text=${member.name.charAt(0)}'; this.onerror=null;">
+            <img 
+                src="${member.image}" 
+                alt="${member.name}" 
+                loading="lazy"
+                decoding="async"
+                onerror="this.src='https://via.placeholder.com/300/${placeholderColor}/ffffff?text=${member.name.charAt(0)}'; this.onerror=null;"
+            >
         </div>
-        <h3>${member.name}</h3>
-        <p>${member.role}</p>
-        <div class="member-social">
-            <a href="${member.social.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="${member.social.github}" target="_blank"><i class="fab fa-github"></i></a>
+
+        <div class="member-content">
+            <h3>${member.name}</h3>
+            <p>${member.role}</p>
+
+            <div class="member-social">
+                <a href="${member.social.linkedin}" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+
+                <a href="${member.social.github}" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
         </div>
     `;
+
+    // Atualiza swiper quando imagem carregar
+    const img = memberCard.querySelector('img');
+
+    img.addEventListener('load', () => {
+        if (swiperInstance) {
+            swiperInstance.update();
+        }
+    });
+
     return memberCard;
 }
 
@@ -612,11 +636,13 @@ function initTeamCarousel() {
     }
     
     const swiperContainer = document.querySelector('.team-swiper');
+    
     if (!swiperContainer) {
         console.error('Swiper container not found!');
         return;
     }
     
+    // Destroy anterior
     if (swiperInstance) {
         swiperInstance.destroy(true, true);
     }
@@ -624,41 +650,66 @@ function initTeamCarousel() {
     swiperInstance = new Swiper('.team-swiper', {
         slidesPerView: 1,
         spaceBetween: 20,
+
+        // IMPORTANTE
+        autoHeight: false,
+        observer: true,
+        observeParents: true,
+        observeSlideChildren: true,
+
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
             dynamicBullets: true,
         },
+
         navigation: {
             nextEl: '#carouselNext',
             prevEl: '#carouselPrev',
         },
+
         autoplay: {
             delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
             stopOnLastSlide: false,
         },
+
         loop: true,
         grabCursor: true,
         effect: 'slide',
         speed: 600,
-        autoHeight: true,
+
         on: {
-            init: function() {
+            init: function () {
                 console.log('Swiper initialized!');
-                updateCategoryButtons(this.activeIndex);
+                updateCategoryButtons(this.realIndex);
+
+                setTimeout(() => {
+                    this.update();
+                }, 300);
             },
-            slideChange: function() {
-                updateCategoryButtons(this.activeIndex);
+
+            slideChange: function () {
+                updateCategoryButtons(this.realIndex);
             },
-            autoplayStart: function() {
+
+            autoplayStart: function () {
                 isPlaying = true;
                 updatePlayPauseButton(true);
             },
-            autoplayStop: function() {
+
+            autoplayStop: function () {
                 isPlaying = false;
                 updatePlayPauseButton(false);
+            },
+
+            imagesReady: function () {
+                this.update();
+            },
+
+            resize: function () {
+                this.update();
             }
         }
     });
