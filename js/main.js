@@ -4,7 +4,7 @@ const teamMembers = [
     {
         name: "João Souza",
         role: "Capitão",
-        image: "assets/images/escuro.webp",
+        image: "assets/images/jao.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
@@ -54,7 +54,7 @@ const teamMembers = [
     {
         name: "Maria Eduarda Wons",
         role: "Membro de Programação",
-        image: "assets/images/xx.webp",
+        image: "assets/images/maria.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
@@ -66,7 +66,7 @@ const teamMembers = [
     {
         name: "Kauã da Silva",
         role: "Membro de Programação",
-        image: "assets/images/kaua.webp",
+        image: "assets/images/kauan.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
@@ -109,13 +109,13 @@ const teamMembers = [
     {
         name: "Lorenzo Riboli",
         role: "Membro de Montagem",
-        image: "assets/images/sabooor.webp",
+        image: "assets/images/lorenzo.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Kauan Fiori",
         role: "Membro de Montagem",
-        image: "assets/images/kauan.webp",
+        image: "assets/images/kauan_ricardo.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
@@ -127,7 +127,7 @@ const teamMembers = [
     {
         name: "Bruno Barbato",
         role: "Membro de Montagem",
-        image: "assets/images/default.webp",
+        image: "assets/images/bruno.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
