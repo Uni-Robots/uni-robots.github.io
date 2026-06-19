@@ -121,6 +121,12 @@ const teamMembers = [
         social: { linkedin: "#", github: "#" }
     },
     {
+        name: "Maria Vitória",
+        role: "Membro de Mecânica",
+        image: "assets/images/6 - mecanica/Maria Vitória - Mecânica.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+    {
         name: "Marina Cardoso",
         role: "Membro de Mecânica",
         image: "assets/images/6 - mecanica/Marina - Mecânica.webp",
