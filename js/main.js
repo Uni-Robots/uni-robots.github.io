@@ -4,149 +4,152 @@ const teamMembers = [
     {
         name: "João Souza",
         role: "Capitão",
-        image: "assets/images/joao_not_white.webp",
+        image: "assets/images/1 - lideranca/joao_not_white.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Matheus Torquato",
         role: "Vice-Capitão",
-        image: "assets/images/torquato.webp",
+        image: "assets/images/1 - lideranca/Matheus S. Torquato - Vice-Capitão_.webp",
         social: { linkedin: "#", github: "#" }
     },
     // Gestores
     {
         name: "Felipe Grabias",
         role: "Gestor de Montagem",
-        image: "assets/images/grabias.webp",
+        image: "assets/images/2 - gestores/Felipe_Grabias_Szostak.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Gustavo Britto Triaquim",
         role: "Gestor de Eletrônica",
-        image: "assets/images/gustavo.webp",
+        image: "assets/images/2 - gestores/gustavo seguidor linha.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "João Pedro",
         role: "Gestor de Eletrônica",
-        image: "assets/images/joao_pedro.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Natália Soltovski",
-        role: "Gestora de Marketing",
-        image: "assets/images/natalia.webp",
+        image: "assets/images/gestores/joao_pedro.webp",
         social: { linkedin: "#", github: "#" }
     },
     // Programação
     {
         name: "Adrian Netto",
         role: "Membro de Programação",
-        image: "assets/images/adrian.webp",
+        image: "assets/images/3 - programacao/Adrian Netto - Programação.webp",
+        social: { linkedin: "#", github: "#" }
+    },  
+    {
+        name: "Bianca Millek",
+        role: "Membro de Programação",
+        image: "assets/images/3 - programacao/Bianca Millek - Programação.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Felipe Santos",
         role: "Membro de Programação",
-        image: "assets/images/felipe.webp",
+        image: "assets/images/3 - programacao/felipe.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+   {
+        name: "Lucas Guzatti",
+        role: "Membro de Programação",
+        image: "assets/images/3 - programacao/Lucas.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Jean Pierre Franz",
         role: "Membro de Programação",
-        image: "assets/images/jean.webp",
+        image: "assets/images/3 - programacao/Jean Pierre - Programação.webp",
         social: { linkedin: "#", github: "#" }
     },
-    {
-        name: "Maria Eduarda Wons",
-        role: "Membro de Programação",
-        image: "assets/images/maria.webp",
-        social: { linkedin: "#", github: "#" }
-    },
+    
+    // Eletrônica
     {
         name: "Kauã da Silva",
-        role: "Membro de Programação",
-        image: "assets/images/kauan.webp",
+        role: "Membro de Eletrônica",
+        image: "assets/images/4 - eletronica/Kauã Ricardo - Eletronica.webp",
+        social: { linkedin: "#", github: "#" }
+    },    
+    {
+        name: "Maria Eduarda Wons",
+        role: "Membro de Eletrônica",
+        image: "assets/images/4 - eletronica/Maria Wons - Eletrônica.webp",
         social: { linkedin: "#", github: "#" }
     },
-    {
-        name: "Eike Petroski",
-        role: "Membro de Programação",
-        image: "assets/images/eike.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Lucas Guzatti",
-        role: "Membro de Programação",
-        image: "assets/images/lucas.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    // Montagem
-    {
-        name: "Pamela da Silva Machado",
-        role: "Membro de Montagem",
-        image: "assets/images/pamela.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Thais Vitoria dos Santos",
-        role: "Membro de Montagem",
-        image: "assets/images/thais.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Marina Cardoso",
-        role: "Membro de Montagem",
-        image: "assets/images/marina.webp",
+
+    // Engenharia
+
+
+   {
+        name: "Bruno Barbato",
+        role: "Membro de Engenharia",
+        image: "assets/images/5 - engenharia/Bruno Barbato - Engenharia.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Eduardo Riad",
-        role: "Membro de Montagem",
-        image: "assets/images/riad.webp",
-        social: { linkedin: "#", github: "#" }
-    },
-    {
-        name: "Lorenzo Riboli",
-        role: "Membro de Montagem",
-        image: "assets/images/lorenzo.webp",
+        role: "Membro de Engenharia",
+        image: "assets/images/5 - engenharia/Eduardo Riad - Engenharia.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Kauan Fiori",
-        role: "Membro de Montagem",
-        image: "assets/images/kauan_ricardo.webp",
+        role: "Membro de Engenharia",
+        image: "assets/images/5 - engenharia/Kauan Fiori - Engenharia.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+    {
+        name: "Lorenzo Riboli",
+        role: "Membro de Engenharia",
+        image: "assets/images/5 - engenharia/Lorenzo de Souza Riboli - Montagem.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
         name: "Poliane Sampaio",
         role: "Membro de Montagem",
-        image: "assets/images/poli.webp",
+        image: "assets/images/6 - mecanica/poli.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+  
+    // Mecanica
+
+    {
+        name: "Caio André",
+        role: "Membro de Mecânica",
+        image: "assets/images/6 - mecanica/Caio André - Mecânica.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
-        name: "Bruno Barbato",
-        role: "Membro de Montagem",
-        image: "assets/images/bruno.webp",
+        name: "Marina Cardoso",
+        role: "Membro de Mecânica",
+        image: "assets/images/6 - mecanica/Marina - Mecânica.webp",
         social: { linkedin: "#", github: "#" }
     },
     {
-        name: "Vinicius Eduardo",
-        role: "Membro de Montagem",
-        image: "assets/images/default.webp",
+        name: "Pamela da Silva Machado",
+        role: "Membro de Mecânica",
+        image: "assets/images/6 - mecanica/Pamela - Mecânica.webp",
         social: { linkedin: "#", github: "#" }
     },
-    {
-        name: "Bianca",
-        role: "Membro de Montagem",
-        image: "assets/images/default.webp",
-        social: { linkedin: "#", github: "#" }
-    },
+    
     // Marketing
+     {
+        name: "Jhiury",
+        role: "Membro de Marketing",
+        image: "assets/images/7 - marketing/Jhiury- marketing_.webp",
+        social: { linkedin: "#", github: "#" }
+    },
+     {
+        name: "Mariana",
+        role: "Membro de Marketing",
+        image: "assets/images/7 - marketing/Mariana - Marketing.webp",
+        social: { linkedin: "#", github: "#" }
+    },
     {
         name: "Maycon Tateiwa",
         role: "Membro de Marketing",
-        image: "assets/images/maycon.webp",
+        image: "assets/images/7 - marketing/Maycon Tateiwa - Marketing.webp",
         social: { linkedin: "#", github: "#" }
     }
 ];
@@ -596,8 +599,10 @@ function renderTeamMembers() {
     const categories = {
         '👑 Liderança': teamMembers.filter(m => m.role === 'Capitão' || m.role === 'Vice-Capitão'),
         '📊 Gestores': teamMembers.filter(m => m.role.includes('Gestor')),
-        '💻 Programação': teamMembers.filter(m => m.role === 'Membro de Programação'),
-        '🔧 Montagem': teamMembers.filter(m => m.role === 'Membro de Montagem'),
+        '👨‍💻 Programação': teamMembers.filter(m => m.role === 'Membro de Programação'),
+        '🔌 Eletrônica': teamMembers.filter(m => m.role === 'Membro de Eletrônica'),
+        '⚙️ Engenharia': teamMembers.filter(m => m.role === 'Membro de Engenharia'),
+        '🔧 Mecânica': teamMembers.filter(m => m.role === 'Membro de Mecânica'),
         '📢 Marketing': teamMembers.filter(m => m.role === 'Membro de Marketing')
     };
     
@@ -723,7 +728,7 @@ function createCategoryNavigation() {
     const categoryNav = document.getElementById('categoryNav');
     if (!categoryNav) return;
     
-    const categories = ['👑 Liderança', '📊 Gestores', '💻 Programação', '🔧 Montagem', '📢 Marketing'];
+    const categories = ['👑 Liderança', '📊 Gestores', '👨‍💻 Programação', '🔌 Eletrônica', '⚙️ Engenharia', '🔧 Mecânica', '📢 Marketing'];
     
     categoryNav.innerHTML = '';
     
