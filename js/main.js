@@ -16,6 +16,10 @@ const teamMembers = [
     // Programação
     { name: "Adrian Netto",           role: "Membro de Programação", image: "assets/images/team/adrian-netto.webp" },
     { name: "Bianca Millek",          role: "Membro de Programação", image: "assets/images/team/bianca-millek.webp" },
+    
+    // Modelo para add links de contato
+    //{ name: "Felipe Santos",          role: "Membro de Programação", image: "assets/images/team/felipe-santos.webp", linkedin: "https://www.linkedin.com/in/oofelipesantos/", github: "https://github.com/felipe-santos-tech" },
+    
     { name: "Felipe Santos",          role: "Membro de Programação", image: "assets/images/team/felipe-santos.webp", linkedin: "https://www.linkedin.com/in/oofelipesantos/", github: "https://github.com/felipe-santos-tech" },
     { name: "Lucas Guzatti",          role: "Membro de Programação", image: "assets/images/team/lucas-guzatti.webp" },
     { name: "Jean Pierre Franz",      role: "Membro de Programação", image: "assets/images/team/jean-pierre.webp" },
