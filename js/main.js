@@ -27,7 +27,7 @@ const teamMembers = [
     { name: "Eduardo Riad",           role: "Membro de Montagem",    image: "assets/images/team/eduardo-riad.webp" },
     { name: "Kauan Fiori",            role: "Membro de Montagem",    image: "assets/images/team/kauan-fiori.webp" },
     { name: "Lorenzo Riboli",         role: "Membro de Montagem",    image: "assets/images/team/lorenzo-riboli.webp" },
-    { name: "Poliane Sampaio",        role: "Membro de Montagem",    image: "assets/images/team/poliane-sampaio.webp" },
+    { name: "Poliane Sampaio",        role: "Membro de Montagem",    image: "assets/images/team/Poli Sampaio - Engenharia.webp" },
     { name: "Caio André",             role: "Membro de Montagem",    image: "assets/images/team/caio-andre.webp" },
     { name: "Maria Vitória",          role: "Membro de Montagem",    image: "assets/images/team/maria-vitoria.webp" },
     { name: "Marina Cardoso",         role: "Membro de Montagem",    image: "assets/images/team/marina-cardoso.webp" },
