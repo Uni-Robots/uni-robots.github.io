@@ -16,7 +16,7 @@ const teamMembers = [
     // Programação
     { name: "Adrian Netto",           role: "Membro de Programação", image: "assets/images/team/adrian-netto.webp" },
     { name: "Bianca Millek",          role: "Membro de Programação", image: "assets/images/team/bianca-millek.webp" },
-    { name: "Felipe Santos",          role: "Membro de Programação", image: "assets/images/team/felipe-santos.webp" },
+    { name: "Felipe Santos",          role: "Membro de Programação", image: "assets/images/team/felipe-santos.webp", linkedin: "https://www.linkedin.com/in/oofelipesantos/", github: "https://github.com/felipe-santos-tech" },
     { name: "Lucas Guzatti",          role: "Membro de Programação", image: "assets/images/team/lucas-guzatti.webp" },
     { name: "Jean Pierre Franz",      role: "Membro de Programação", image: "assets/images/team/jean-pierre.webp" },
     // Eletrônica
@@ -83,6 +83,7 @@ function createMemberCard(member) {
     img.alt = member.name;
     img.loading = 'lazy';
     img.decoding = 'async';
+
     img.addEventListener('error', () => {
         img.src = fallbackAvatar(member.name.charAt(0));
     }, { once: true });
@@ -93,16 +94,61 @@ function createMemberCard(member) {
 
     const content = document.createElement('div');
     content.className = 'member-content';
-    content.innerHTML = `<h3></h3><p></p>
-        <div class="member-social">
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        </div>`;
-    content.querySelector('h3').textContent = member.name;
-    content.querySelector('p').textContent = member.role;
+
+    const memberName = document.createElement('h3');
+    memberName.textContent = member.name;
+
+    const memberRole = document.createElement('p');
+    memberRole.textContent = member.role;
+
+    const social = document.createElement('div');
+    social.className = 'member-social';
+
+    // LinkedIn
+    if (member.linkedin) {
+        const linkedin = document.createElement('a');
+
+        linkedin.href = member.linkedin;
+        linkedin.target = '_blank';
+        linkedin.rel = 'noopener noreferrer';
+        linkedin.setAttribute(
+            'aria-label',
+            `LinkedIn de ${member.name}`
+        );
+
+        linkedin.innerHTML = '<i class="fab fa-linkedin"></i>';
+
+        social.appendChild(linkedin);
+    }
+
+    // GitHub
+    if (member.github) {
+        const github = document.createElement('a');
+
+        github.href = member.github;
+        github.target = '_blank';
+        github.rel = 'noopener noreferrer';
+        github.setAttribute(
+            'aria-label',
+            `GitHub de ${member.name}`
+        );
+
+        github.innerHTML = '<i class="fab fa-github"></i>';
+
+        social.appendChild(github);
+    }
+
+    content.appendChild(memberName);
+    content.appendChild(memberRole);
+
+    // Só mostra a área social se houver algum link
+    if (social.children.length > 0) {
+        content.appendChild(social);
+    }
 
     card.appendChild(imgWrap);
     card.appendChild(content);
+
     return card;
 }
 
