@@ -437,7 +437,7 @@ function initSponsorFormModal() {
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(form);
-        formData.append("access_key", "4593f6f1-6990-4e36-b3f1-e3da349f372e");
+        formData.append("access_key", "94497f20-3275-4881-8932-580120d73607");
         formData.append("subject", `Patrocínio - ${formData.get('sponsor_tier')} - ${formData.get('name')}`);
 
         const originalText = submitBtn.innerHTML;
