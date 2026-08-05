@@ -471,7 +471,7 @@ function initContactForm() {
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(form);
-        formData.append("access_key", "bfad3ab4-fcfe-4bf0-900c-5eba22770020");
+        formData.append("access_key", "4593f6f1-6990-4e36-b3f1-e3da349f372e");
 
         const originalText = submitBtn.textContent;
         submitBtn.textContent = "Enviando...";
@@ -502,7 +502,7 @@ function initNewsletterForm() {
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(form);
-        formData.append("access_key", "5bbfcdd2-4d92-440a-bb30-d57ddc83c682");
+        formData.append("access_key", "4593f6f1-6990-4e36-b3f1-e3da349f372e");
         formData.append("subject", "Newsletter - Novo inscrito");
 
         const originalText = submitBtn.innerHTML;
