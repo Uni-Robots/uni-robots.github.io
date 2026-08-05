@@ -39,7 +39,8 @@ const teamMembers = [
     // Marketing
     { name: "Jhiury",                 role: "Membro de Marketing",   image: "assets/images/team/jhiury.webp" },
     { name: "Mariana",                role: "Membro de Marketing",   image: "assets/images/team/mariana.webp" },
-    { name: "Maycon Tateiwa",         role: "Membro de Marketing",   image: "assets/images/team/maycon-tateiwa.webp" }
+    { name: "Maycon Tateiwa",         role: "Membro de Marketing",   image: "assets/images/team/maycon-tateiwa.webp" },
+    { name: "Yuri Powrosnek",                   role: "Membro de Marketing",   image: "assets/images/team/yuri.webp" }
 ];
 
 // Categorias (Montagem reúne Engenharia + Mecânica)
