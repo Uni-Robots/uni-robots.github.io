@@ -477,28 +477,113 @@ body {
     color: var(--text-light);
 }
 
-.sponsors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+.sponsor-marquee {
+    position: relative;
+    width: 100vw;
+    margin: 0 0 3rem calc(50% - 50vw);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(0, 168, 255, 0.25);
+    border-bottom: 1px solid rgba(0, 168, 255, 0.25);
 }
 
-.sponsor-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
+.sponsor-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: sponsor-marquee-scroll 30s linear infinite;
+}
+
+.sponsor-marquee-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 3.5vw, 3.5rem);
+    padding-right: clamp(2rem, 3.5vw, 3.5rem);
+    flex: 0 0 auto;
+}
+
+.sponsor-marquee-item {
+    flex: 0 0 clamp(110px, 11vw, 155px);
+    height: 118px;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sponsor-marquee-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@keyframes sponsor-marquee-scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 600px) {
+    .sponsor-marquee-track {
+        animation-duration: 22s;
+    }
+}
+
+.sponsor-details {
+    margin-bottom: 3.5rem;
+}
+
+.sponsor-details-title {
+    margin-bottom: 2rem;
+    color: var(--text-light);
     text-align: center;
+    font-size: 1.6rem;
+}
+
+.sponsor-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.sponsor-detail-card {
+    min-height: 280px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-light);
     transition: var(--transition);
 }
 
-.sponsor-card:hover {
-    transform: scale(1.05);
+.sponsor-detail-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary-color);
+    box-shadow: 0 14px 30px rgba(0, 168, 255, 0.16);
 }
 
-.sponsor-card img {
-    max-width: 100%;
-    height: auto;
+.sponsor-detail-logo {
+    height: 105px;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: white;
+}
+
+.sponsor-detail-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.sponsor-detail-card h3 {
+    margin-bottom: 0.65rem;
+    font-size: 1.15rem;
+}
+
+.sponsor-detail-card p {
+    color: var(--text-gray);
+    font-size: 0.92rem;
+    line-height: 1.55;
 }
 
 .sponsor-message {

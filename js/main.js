@@ -392,7 +392,7 @@ function initScrollAnimations() {
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.project-card, .team-member, .sponsor-card, .social-card').forEach(el => {
+    document.querySelectorAll('.project-card, .team-member, .sponsor-card:not(.sponsor-slide), .social-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.6s ease';
