@@ -1,0 +1,244 @@
+{
+  "baseUrl": "http://127.0.0.1:8731",
+  "date": "2026-11-18T14:50:04.298Z",
+  "results": [
+    {
+      "page": "index",
+      "viewport": "desktop",
+      "requests": 9,
+      "bytes": 513518,
+      "image": 234591,
+      "css": 50217,
+      "js": 24212,
+      "font": 199747,
+      "html": 4751,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "index",
+      "viewport": "mobile",
+      "requests": 9,
+      "bytes": 513519,
+      "image": 234591,
+      "css": 50215,
+      "js": 24212,
+      "font": 199750,
+      "html": 4751,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "sobre",
+      "viewport": "desktop",
+      "requests": 10,
+      "bytes": 533365,
+      "image": 253726,
+      "css": 50214,
+      "js": 24212,
+      "font": 199747,
+      "html": 5466,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "sobre",
+      "viewport": "mobile",
+      "requests": 10,
+      "bytes": 533366,
+      "image": 253726,
+      "css": 50214,
+      "js": 24212,
+      "font": 199748,
+      "html": 5466,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "projetos",
+      "viewport": "desktop",
+      "requests": 9,
+      "bytes": 513092,
+      "image": 234591,
+      "css": 50207,
+      "js": 24212,
+      "font": 199755,
+      "html": 4327,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "projetos",
+      "viewport": "mobile",
+      "requests": 9,
+      "bytes": 513084,
+      "image": 234591,
+      "css": 50214,
+      "js": 24212,
+      "font": 199740,
+      "html": 4327,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "equipe",
+      "viewport": "desktop",
+      "requests": 35,
+      "bytes": 6954529,
+      "image": 6567189,
+      "css": 50216,
+      "js": 24212,
+      "font": 308308,
+      "html": 4604,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "equipe",
+      "viewport": "mobile",
+      "requests": 35,
+      "bytes": 6954664,
+      "image": 6567189,
+      "css": 50216,
+      "js": 24212,
+      "font": 308443,
+      "html": 4604,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "patrocinadores",
+      "viewport": "desktop",
+      "requests": 16,
+      "bytes": 1209675,
+      "image": 920176,
+      "css": 50213,
+      "js": 24212,
+      "font": 199758,
+      "html": 15316,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "patrocinadores",
+      "viewport": "mobile",
+      "requests": 16,
+      "bytes": 1209667,
+      "image": 920176,
+      "css": 50217,
+      "js": 24212,
+      "font": 199746,
+      "html": 15316,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "redes",
+      "viewport": "desktop",
+      "requests": 10,
+      "bytes": 622253,
+      "image": 234591,
+      "css": 50216,
+      "js": 24212,
+      "font": 308166,
+      "html": 5068,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "redes",
+      "viewport": "mobile",
+      "requests": 10,
+      "bytes": 622261,
+      "image": 234591,
+      "css": 50215,
+      "js": 24212,
+      "font": 308175,
+      "html": 5068,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "contato",
+      "viewport": "desktop",
+      "requests": 10,
+      "bytes": 623795,
+      "image": 234591,
+      "css": 50214,
+      "js": 24212,
+      "font": 308160,
+      "html": 6618,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    },
+    {
+      "page": "contato",
+      "viewport": "mobile",
+      "requests": 10,
+      "bytes": 623809,
+      "image": 234591,
+      "css": 50214,
+      "js": 24212,
+      "font": 308174,
+      "html": 6618,
+      "other": 0,
+      "external": [
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ]
+    }
+  ]
+}
