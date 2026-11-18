@@ -10,8 +10,8 @@ Fonte: `http://127.0.0.1:8731` — 2026-11-18. Valores em KB, cache vazio, pági
 | sobre | mobile | 10 | 521 | 248 | 49 | 24 | 195 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
 | projetos | desktop | 9 | 501 | 229 | 49 | 24 | 195 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
 | projetos | mobile | 9 | 501 | 229 | 49 | 24 | 195 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
-| equipe | desktop | 35 | 6792 | 6413 | 49 | 24 | 301 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
-| equipe | mobile | 35 | 6792 | 6413 | 49 | 24 | 301 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
+| equipe | desktop | 35 | 6791 | 6413 | 49 | 24 | 301 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
+| equipe | mobile | 35 | 6791 | 6413 | 49 | 24 | 301 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
 | patrocinadores | desktop | 16 | 1181 | 899 | 49 | 24 | 195 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
 | patrocinadores | mobile | 16 | 1181 | 899 | 49 | 24 | 195 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |
 | redes | desktop | 10 | 608 | 229 | 49 | 24 | 301 | cdnjs.cloudflare.com, fonts.googleapis.com, fonts.gstatic.com |

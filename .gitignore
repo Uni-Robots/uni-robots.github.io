@@ -11,3 +11,6 @@ dist/
 .DS_Store
 .vscode/*
 !.vscode/extensions.json
+
+# Medições de trabalho da migração (só a baseline é versionada)
+migration/current/

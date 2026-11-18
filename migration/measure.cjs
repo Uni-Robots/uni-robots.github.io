@@ -78,6 +78,7 @@ async function measure(browser, name, vpName) {
     await page.screenshot({
         path: path.join(shotDir, `${name}-${vpName}.jpg`),
         fullPage: true, type: 'jpeg', quality: 70,
+        animations: 'disabled', // congela o carrossel de patrocinadores no estado inicial
     });
 
     await Promise.all(pending);

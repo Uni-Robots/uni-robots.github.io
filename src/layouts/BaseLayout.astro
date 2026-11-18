@@ -1,0 +1,41 @@
+---
+import { Font } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/main.css';
+import '../styles/responsive.css';
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = 'UniRobot - Equipe de robótica competitiva. Inovação, tecnologia e robótica para o futuro.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>UniRobot - {title}</title>
+        <meta name="description" content={description}>
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <Font cssVariable="--font-inter" preload />
+        <!-- Font Awesome: substituído por SVGs locais na Fase 4 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body>
+        <Header />
+        <slot />
+        <Footer />
+
+        <script>
+            // Ponte temporária: JS do site antigo, dividido em módulos na Fase 5.
+            import '../scripts/legacy-main.js';
+        </script>
+    </body>
+</html>

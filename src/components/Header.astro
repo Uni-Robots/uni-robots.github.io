@@ -1,0 +1,34 @@
+---
+import logo from '../assets/logo.png';
+
+const nav = [
+    { slug: 'index', label: 'Início' },
+    { slug: 'sobre', label: 'Sobre' },
+    { slug: 'projetos', label: 'Projetos' },
+    { slug: 'equipe', label: 'Equipe' },
+    { slug: 'patrocinadores', label: 'Patrocinadores' },
+    { slug: 'redes', label: 'Redes Sociais' },
+    { slug: 'contato', label: 'Contato' },
+];
+
+// Funciona para "/", "/index.html", "/equipe" e "/equipe.html".
+const current = Astro.url.pathname.split('/').pop()?.replace(/\.html$/, '') || 'index';
+---
+
+<header class="header">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/index.html"><img src={logo.src} alt="UniRobot Logo" class="logo-img"></a>
+        </div>
+        <ul class="nav-menu">
+            {nav.map(({ slug, label }) => (
+                <li><a href={`/${slug}.html`} class:list={['nav-link', { active: slug === current }]}>{label}</a></li>
+            ))}
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+</header>

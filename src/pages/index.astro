@@ -1,28 +1,18 @@
 ---
-// Página provisória da Fase 1: confirma que o CSS antigo e a fonte Inter carregam.
-// Será substituída pelo BaseLayout + conteúdo real na Fase 2.
-import { Font } from 'astro:assets';
-import '../styles/main.css';
-import '../styles/responsive.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>UniRobot - Início</title>
-        <meta name="description" content="UniRobot - Equipe de robótica competitiva. Inovação, tecnologia e robótica para o futuro." />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <Font cssVariable="--font-inter" preload />
-    </head>
-    <body>
-        <section class="hero">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">UniRobot</h1>
-                <p class="hero-subtitle">Migração para Astro em andamento</p>
+<BaseLayout title="Início">
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">UniRobot</h1>
+            <p class="hero-subtitle">Inovação, Tecnologia e Robótica para o Futuro</p>
+            <p class="hero-description">Somos uma equipe apaixonada por robótica, competindo em torneios nacionais, desenvolvendo soluções tecnológicas de ponta.</p>
+            <div class="hero-buttons">
+                <a href="/contato.html" class="btn btn-primary">Junte-se a Nós</a>
+                <a href="/projetos.html" class="btn btn-secondary">Nossos Projetos</a>
             </div>
-        </section>
-    </body>
-</html>
+        </div>
+    </section>
+</BaseLayout>

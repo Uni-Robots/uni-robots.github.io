@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import sobreEquipe from '../assets/sobre-equipe.webp';
+---
+
+<BaseLayout title="Sobre">
+    <main class="page-main">
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre a UniRobot</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>A UniRobot é uma equipe de robótica competitiva formada por estudantes universitários apaixonados por tecnologia, engenharia e inovação.</p>
+                    <p>Fundada em 2020, já participamos de diversas competições nacionais e internacionais, sempre buscando superar desafios e desenvolver soluções criativas para problemas complexos.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>5+</h3>
+                            <p>Competições</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24</h3>
+                            <p>Membros</p>
+                        </div>
+                        <div class="stat">
+                            <h3>5+</h3>
+                            <p>Prêmios</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src={sobreEquipe.src} alt="Equipe UniRobot" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+</BaseLayout>

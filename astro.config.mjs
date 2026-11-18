@@ -5,13 +5,24 @@ export default defineConfig({
     site: 'https://uni-robots.github.io',
     // Gera equipe.html (e não equipe/index.html) para manter as URLs atuais do site.
     build: { format: 'file' },
-    // Inter baixada no build e servida pelo próprio site (sem Google Fonts em runtime).
+    // Inter servida pelo próprio site. O arquivo é exatamente o que o Google Fonts entrega
+    // (variável, subset latin, só estilo normal — o site não usa itálico); o provider
+    // google() do Astro baixa outra versão da Inter, com métricas diferentes.
+    // Licença: src/assets/fonts/OFL.txt
     fonts: [
         {
-            provider: fontProviders.google(),
+            provider: fontProviders.local(),
             name: 'Inter',
             cssVariable: '--font-inter',
-            weights: ['300', '400', '500', '600', '700', '800'],
+            options: {
+                variants: [
+                    {
+                        src: ['./src/assets/fonts/inter-latin-wght.woff2'],
+                        weight: '300 800',
+                        style: 'normal',
+                    },
+                ],
+            },
         },
     ],
 });

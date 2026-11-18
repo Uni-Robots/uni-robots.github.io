@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// Provisório (Fase 2): os patrocinadores viram uma coleção de dados na Fase 3.
+import logo0 from '../content/sponsors/3d-brothers.png';
+import logo1 from '../content/sponsors/artely.png';
+import logo2 from '../content/sponsors/unisenai-pr.png';
+import logo3 from '../content/sponsors/gms-uniformes.png';
+import logo4 from '../content/sponsors/fab-lab.png';
+import logo5 from '../content/sponsors/solidworks.png';
+import logo6 from '../content/sponsors/3d-touch.png';
+
+const logos = { '3d-brothers': logo0, 'artely': logo1, 'unisenai-pr': logo2, 'gms-uniformes': logo3, 'fab-lab': logo4, 'solidworks': logo5, '3d-touch': logo6 };
+---
+
+<BaseLayout title="Patrocinadores">
+    <main class="page-main">
+    <section id="sponsors" class="sponsors">
+        <div class="container">
+            <h2 class="section-title">Nossos Patrocinadores</h2>
+            <div class="sponsor-marquee" role="region" aria-label="Patrocinadores da UniRobot">
+                <div class="sponsor-marquee-track">
+                    <div class="sponsor-marquee-group">
+                        <div class="sponsor-marquee-item"><img src={logos['3d-brothers'].src} alt="3D Brothers" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['artely'].src} alt="Artely Complementos para Sala" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['unisenai-pr'].src} alt="UniSENAI PR" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['gms-uniformes'].src} alt="GMS Uniformes" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['fab-lab'].src} alt="Fab Lab" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['solidworks'].src} alt="SOLIDWORKS" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['3d-touch'].src} alt="3D Touch" loading="lazy"></div>
+                    </div>
+                    <div class="sponsor-marquee-group" aria-hidden="true">
+                        <div class="sponsor-marquee-item"><img src={logos['3d-brothers'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['artely'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['unisenai-pr'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['gms-uniformes'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['fab-lab'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['solidworks'].src} alt="" loading="lazy"></div>
+                        <div class="sponsor-marquee-item"><img src={logos['3d-touch'].src} alt="" loading="lazy"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sponsor-details">
+                <h3 class="sponsor-details-title">Conheça nossos parceiros</h3>
+                <div class="sponsor-details-grid">
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['3d-brothers'].src} alt="3D Brothers" loading="lazy"></div>
+                        <h3>3D Brothers</h3>
+                        <p>Empresa curitibana que produz filamentos nacionais e oferece soluções para a comunidade de impressão 3D.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['artely'].src} alt="Artely Complementos para Sala" loading="lazy"></div>
+                        <h3>Artely</h3>
+                        <p>Fabricante de móveis e complementos para sala, como racks, painéis, mesas e aparadores.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['unisenai-pr'].src} alt="UniSENAI PR" loading="lazy"></div>
+                        <h3>UniSENAI PR</h3>
+                        <p>Centro universitário voltado a engenharia, tecnologia, gestão e inovação, conectando ensino e indústria.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['gms-uniformes'].src} alt="GMS Uniformes" loading="lazy"></div>
+                        <h3>GMS Uniformes</h3>
+                        <p>Confecciona uniformes profissionais e acessórios personalizados com foco em qualidade e inovação.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['fab-lab'].src} alt="Fab Lab" loading="lazy"></div>
+                        <h3>Fab Lab</h3>
+                        <p>Laboratório de fabricação digital que transforma ideias em protótipos usando criação e tecnologia.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['solidworks'].src} alt="SOLIDWORKS" loading="lazy"></div>
+                        <h3>SOLIDWORKS</h3>
+                        <p>Plataforma de CAD 3D para modelar, simular e validar peças e projetos de engenharia.</p>
+                    </article>
+                    <article class="sponsor-detail-card">
+                        <div class="sponsor-detail-logo"><img src={logos['3d-touch'].src} alt="3D Touch" loading="lazy"></div>
+                        <h3>3D Touch</h3>
+                        <p>Distribuidora nacional de soluções em impressão 3D, com impressoras, materiais e suporte técnico.</p>
+                    </article>
+                </div>
+            </div>
+            <div class="sponsor-message">
+                <p>Seja um patrocinador da UniRobot e faça parte dessa jornada!</p>
+                <a href="#" class="btn btn-outline" id="openSponsorModalBtn">Torne-se um Patrocinador</a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    {/* Modal de Patrocínio */}
+    <div id="sponsorModal" class="sponsor-modal">
+        <div class="sponsor-modal-content">
+            <span class="sponsor-modal-close">&times;</span>
+
+            <div class="sponsor-modal-header">
+                <div class="sponsor-icon-animation">
+                    <i class="fas fa-handshake"></i>
+                    <i class="fas fa-star sponsor-star-1"></i>
+                    <i class="fas fa-star sponsor-star-2"></i>
+                    <i class="fas fa-star sponsor-star-3"></i>
+                </div>
+                <h2>✨ Seja um Patrocinador ✨</h2>
+                <p>Faça parte da nossa jornada e ajude a construir o futuro da robótica!</p>
+                <div class="sponsor-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>Parceiro Oficial</span>
+                </div>
+            </div>
+
+            <div class="sponsor-benefits">
+                <h3><i class="fas fa-gift"></i> Benefícios exclusivos</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fas fa-chalkboard-user"></i>
+                        <span>Logo no site e materiais</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificado de parceria</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-users"></i>
+                        <span>Menção nas redes sociais</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-video"></i>
+                        <span>Destaque em vídeos</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="sponsorForm" class="sponsor-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="sponsor_name" name="name" required>
+                        <label for="sponsor_name">
+                            <i class="fas fa-building"></i>
+                            Nome da Empresa / Pessoa
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row double">
+                    <div class="form-group">
+                        <input type="email" id="sponsor_email" name="email" required>
+                        <label for="sponsor_email">
+                            <i class="fas fa-envelope"></i>
+                            E-mail para contato
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="sponsor_phone" name="phone">
+                        <label for="sponsor_phone">
+                            <i class="fas fa-phone"></i>
+                            Telefone (opcional)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <select id="sponsor_tier" name="sponsor_tier" required>
+                            <option value=""></option>
+                            <option value="Bronze">🥉 Bronze - R$ 100</option>
+                            <option value="Prata">🥈 Prata - R$ 200</option>
+                            <option value="Ouro">🥇 Ouro - R$ 500</option>
+                            <option value="Platina">💎 Platina - R$ 1.000+</option>
+                            <option value="Outro">🤝 Quero conversar sobre valores</option>
+                        </select>
+                        <label for="sponsor_tier">
+                            <i class="fas fa-medal"></i>
+                            Nível de Patrocínio
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <textarea id="sponsor_message" name="message" rows="4" required></textarea>
+                        <label for="sponsor_message">
+                            <i class="fas fa-comment"></i>
+                            Mensagem / Proposta
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="sponsor_terms" required>
+                    <label for="sponsor_terms">
+                        Concordo em receber comunicações sobre parcerias
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-sponsor-submit">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Enviar Proposta</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="sponsor-modal-footer">
+                <p>
+                    <i class="fas fa-lock"></i> Seus dados estão seguros
+                    <span class="separator">•</span>
+                    <i class="fas fa-reply-all"></i> Respondemos em até 24h
+                </p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
