@@ -1,0 +1,13 @@
+# Dependências e build
+node_modules/
+dist/
+.astro/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Sistema / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
