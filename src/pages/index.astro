@@ -1,7 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import { getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Arena from '../components/Arena.astro';
+import RobotSheet from '../components/RobotSheet.astro';
+import ResenhaEasterEgg from '../components/ResenhaEasterEgg.astro';
 import logo from '../assets/logo.png';
+
+const robots = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const modalidades = new Set(robots.map((r) => r.data.category)).size;
+const extenso = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez'];
+const porExtenso = (n: number) => extenso[n] ?? String(n);
 
 // Dados estruturados (schema.org) para buscadores: nome, logo, contato e redes da equipe.
 const logoPng = await getImage({ src: logo, width: 512, format: 'png' });
@@ -9,7 +18,7 @@ const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'UniRobot',
-    description: 'Equipe de robótica competitiva formada por estudantes universitários.',
+    description: 'Equipe universitária de robótica competitiva.',
     url: Astro.site?.href,
     logo: new URL(logoPng.src, Astro.site).href,
     email: 'equipe.unirobot@gmail.com',
@@ -26,19 +35,133 @@ const organization = {
 
 <BaseLayout
     title="Início"
-    description="UniRobot: equipe de robótica competitiva formada por estudantes universitários de São José dos Pinhais (PR). Inovação, tecnologia e robótica para o futuro."
+    description="UniRobot: equipe universitária de robótica competitiva de São José dos Pinhais (PR). Robôs de sumô, seguidor de linha, hockey e artbot desde 2020."
 >
     <script type="application/ld+json" slot="head" set:html={JSON.stringify(organization)} />
-    <section id="home" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">UniRobot</h1>
-            <p class="hero-subtitle">Inovação, Tecnologia e Robótica para o Futuro</p>
-            <p class="hero-description">Somos uma equipe apaixonada por robótica, competindo em torneios nacionais, desenvolvendo soluções tecnológicas de ponta.</p>
-            <div class="hero-buttons">
-                <a href="/contato.html" class="btn btn-primary">Junte-se a Nós</a>
-                <a href="/projetos.html" class="btn btn-secondary">Nossos Projetos</a>
+
+    <section class="container inicio">
+        <div class="chamada">
+            <h1>Robôs de competição feitos por estudantes</h1>
+            <p>
+                A UniRobot é a equipe de robótica de estudantes universitários de São José dos Pinhais (PR).
+                Desde 2020 projetamos, montamos e programamos robôs para sumô, seguidor de linha, hockey e artbot.
+            </p>
+            <div class="acoes">
+                <a href="/projetos.html" class="btn">Ver os robôs</a>
+                <a href="/contato.html" class="link-acao">Entrar na equipe</a>
             </div>
         </div>
+        <Arena />
     </section>
+
+    <section class="container secao" aria-labelledby="robos-titulo">
+        <div class="cabeca">
+            <h2 id="robos-titulo">Os robôs</h2>
+            <p class="apoio">
+                {porExtenso(robots.length).replace(/^./, (c) => c.toUpperCase())} robôs em {porExtenso(modalidades)} modalidades.
+            </p>
+        </div>
+        <div class="sumula">
+            {robots.map((robot) => <RobotSheet robot={robot} />)}
+        </div>
+    </section>
+
+    <section class="container secao convites">
+        <div>
+            <h2>Entre na equipe</h2>
+            <p>
+                A equipe se divide em programação, eletrônica, montagem e marketing.
+                Conte o que você gosta de fazer e a gente responde.
+            </p>
+            <a href="/contato.html" class="btn">Falar com a equipe</a>
+        </div>
+        <div>
+            <h2>Patrocine a UniRobot</h2>
+            <p>
+                Empresas parceiras aparecem no site, nos materiais e nos vídeos da equipe,
+                são mencionadas nas redes e recebem certificado de parceria.
+            </p>
+            <a href="/patrocinadores.html" class="btn btn-lilas">Ver como patrocinar</a>
+        </div>
+    </section>
+
+    <ResenhaEasterEgg />
 </BaseLayout>
+
+<style>
+    .inicio {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: clamp(2rem, 5vw, 4rem);
+        align-items: center;
+        padding-block: clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 2rem);
+    }
+
+    .chamada p {
+        margin-top: 1.5rem;
+        font-size: var(--t-1);
+        line-height: 1.45;
+        color: var(--neblina);
+        max-width: 34ch;
+    }
+
+    .acoes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1.75rem;
+        margin-top: 2rem;
+    }
+
+    .cabeca {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .sumula {
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .convites {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .convites > div {
+        display: grid;
+        align-content: start;
+        justify-items: start;
+        gap: 1.25rem;
+        padding-right: clamp(1.5rem, 4vw, 3.5rem);
+    }
+
+    .convites > div + div {
+        padding-left: clamp(1.5rem, 4vw, 3.5rem);
+        padding-right: 0;
+        border-left: 2px solid var(--linha);
+    }
+
+    .convites p {
+        color: var(--neblina);
+        max-width: 40ch;
+    }
+
+    @media (max-width: 820px) {
+        .inicio,
+        .convites {
+            grid-template-columns: 1fr;
+        }
+
+        .convites > div + div {
+            padding-left: 0;
+            padding-top: 2.5rem;
+            margin-top: 1rem;
+            border-left: 0;
+            border-top: 2px solid var(--linha);
+        }
+    }
+</style>

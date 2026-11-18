@@ -2,48 +2,48 @@
     {
         "id": "pimpolho",
         "title": "Pimpolho",
-        "description": "Seguidor de Linha",
-        "icon": "shoe-prints",
+        "category": "Seguidor de linha",
         "order": 1,
         "easterEgg": false
     },
     {
         "id": "hockey-league",
         "title": "Hockey League",
-        "description": "Hockey Micro",
-        "icon": "hockey-puck",
+        "category": "Hockey micro",
         "order": 2,
         "easterEgg": false
     },
     {
         "id": "tribagual",
         "title": "Tribagual",
-        "description": "Sumô Mini 500g (Auto)",
-        "icon": "dumbbell",
+        "category": "Sumô mini",
+        "weight": "500 g",
+        "mode": "Autônomo",
         "order": 3,
         "easterEgg": true
     },
     {
         "id": "taz",
         "title": "Taz",
-        "description": "Sumô Lego 1kg (Auto)",
-        "icon": "cubes",
+        "category": "Sumô Lego",
+        "weight": "1 kg",
+        "mode": "Autônomo",
         "order": 4,
         "easterEgg": true
     },
     {
         "id": "uninho",
         "title": "Uninho",
-        "description": "Sumô Lego 1kg (Auto)",
-        "icon": "cubes",
+        "category": "Sumô Lego",
+        "weight": "1 kg",
+        "mode": "Autônomo",
         "order": 5,
         "easterEgg": true
     },
     {
         "id": "perry-o-ornintorrinco",
         "title": "Perry o Ornintorrinco",
-        "description": "Artbot",
-        "icon": "paintbrush",
+        "category": "Artbot",
         "order": 6,
         "easterEgg": false
     }

@@ -5,28 +5,68 @@ import { getTeamByCategory } from '../lib/team';
 
 const groups = await getTeamByCategory();
 const total = groups.reduce((n, g) => n + g.members.length, 0);
+// Liderança e gestores com foto maior
+const destaque = new Set(['lideranca', 'gestores']);
 ---
 
 <BaseLayout
     title="Equipe"
     description={`Conheça os ${total} membros da UniRobot: liderança, gestores e as áreas de programação, eletrônica, montagem e marketing.`}
 >
-    <main class="page-main">
-    <section id="team" class="team">
-        <div class="container">
-            <h2 class="section-title">Nossa Equipe</h2>
+    <div class="container abertura">
+        <h1>Equipe</h1>
+        <p>{total} estudantes, organizados em liderança, gestão e quatro áreas de trabalho.</p>
+    </div>
 
-            <div id="team-sections" class="team-sections">
-                {groups.map(({ id, label, members }) => (
-                    <div class="team-category" id={`cat-${id}`}>
-                        <div class="category-header"><h3>{label}</h3><span class="member-count">{members.length} membro{members.length > 1 ? 's' : ''}</span></div>
-                        <div class="members-grid">
-                            {members.map((member) => <MemberCard member={member} />)}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-    </main>
+    <div class="container fim">
+        {groups.map(({ id, label, members }) => (
+            <section class="area" id={`cat-${id}`} aria-labelledby={`titulo-${id}`}>
+                <div class="area-cabeca">
+                    <h2 id={`titulo-${id}`}>{label}</h2>
+                    <p class="apoio">{members.length} {members.length > 1 ? 'pessoas' : 'pessoa'}</p>
+                </div>
+                <div class:list={['grade', { 'grade-destaque': destaque.has(id) }]}>
+                    {members.map((member) => <MemberCard member={member} destaque={destaque.has(id)} />)}
+                </div>
+            </section>
+        ))}
+    </div>
 </BaseLayout>
+
+<style>
+    .fim {
+        padding-bottom: var(--secao);
+    }
+
+    .area + .area {
+        margin-top: clamp(3.5rem, 7vw, 5rem);
+    }
+
+    .area-cabeca {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.75rem;
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .grade {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+        gap: 2rem 1.5rem;
+    }
+
+    .grade-destaque {
+        grid-template-columns: repeat(auto-fill, minmax(12rem, 16rem));
+    }
+
+    @media (max-width: 640px) {
+        .grade,
+        .grade-destaque {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.75rem 1rem;
+        }
+    }
+</style>

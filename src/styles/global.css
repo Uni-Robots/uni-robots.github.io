@@ -1,0 +1,334 @@
+/* ==========================================================================
+   UniRobot — base do design "Arena"
+   Tokens, tipografia e peças comuns. Estilo específico de cada componente/página
+   fica no <style> do próprio arquivo .astro.
+
+   Regras da identidade:
+   - cores sólidas (sem gradiente decorativo); azul = ação/link/foco, lilás = detalhe;
+   - Pixelify Sans só em títulos e nomes de robô, sempre em caixa normal;
+   - cantos retos; canto "em degrau" (pixel) só nos botões;
+   - nada de emoji decorativo.
+   ========================================================================== */
+
+:root {
+    --noite: #1a1a2e;    /* fundo */
+    --arena: #0f0f1a;    /* arena, rodapé, campos */
+    --giz: #f3f2fa;      /* texto; borda branca da arena */
+    --neblina: #a9a7c2;  /* texto secundário */
+    --azul: #00a8ff;     /* ações, links, foco */
+    --lilas: #9c88ff;    /* detalhes */
+    --linha: #34325a;    /* divisões (decorativas) */
+    --contorno: #726f9f; /* contorno de campos e botões: ≥ 3:1 sobre os fundos */
+    --papel: #f6f5fb;    /* fundo claro dos logos de patrocinadores */
+
+    /* Escala 1,333 (quarta justa) sobre 17 px */
+    --t-0: 1.0625rem;
+    --t-1: 1.417rem;
+    --t-2: 1.889rem;
+    --t-3: 2.518rem;
+    --t-4: 3.357rem;
+    --t-5: 4.476rem;
+
+    --largura: 70rem;
+    --respiro: clamp(1.25rem, 4vw, 2.5rem);
+    --secao: clamp(4rem, 9vw, 7rem);
+    --degrau: 4px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+}
+
+body {
+    background: var(--noite);
+    color: var(--giz);
+    font-family: var(--font-text);
+    font-size: var(--t-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.1;
+    text-wrap: balance;
+}
+
+h1,
+h2 {
+    font-family: var(--font-pixel);
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+h1 {
+    font-size: clamp(var(--t-3), 7vw, var(--t-5));
+}
+
+h2 {
+    font-size: clamp(var(--t-2), 4.5vw, var(--t-3));
+}
+
+h3 {
+    font-size: var(--t-1);
+    font-weight: 700;
+}
+
+p {
+    max-width: 65ch;
+    text-wrap: pretty;
+}
+
+a {
+    color: var(--azul);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+}
+
+a:hover {
+    color: var(--giz);
+}
+
+:focus-visible {
+    outline: 3px solid var(--azul);
+    outline-offset: 3px;
+}
+
+::selection {
+    background: var(--lilas);
+    color: var(--arena);
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+    width: 100%;
+    max-width: var(--largura);
+    margin-inline: auto;
+    padding-inline: var(--respiro);
+}
+
+.secao {
+    padding-block: var(--secao);
+}
+
+.secao + .secao {
+    padding-top: 0;
+}
+
+/* Abertura das páginas internas: título + parágrafo de apoio */
+.abertura {
+    padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.abertura p {
+    margin-top: 1.25rem;
+    font-size: var(--t-1);
+    line-height: 1.45;
+    color: var(--neblina);
+    max-width: 48ch;
+}
+
+.apoio {
+    color: var(--neblina);
+}
+
+/* ---------- Botões ---------- */
+
+/* Canto em degrau, como o contorno pixelado do logo */
+.btn {
+    --cor: var(--azul);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.85rem 1.5rem;
+    border: 0;
+    background: var(--cor);
+    color: var(--arena);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    clip-path: polygon(
+        0 var(--degrau), var(--degrau) var(--degrau), var(--degrau) 0,
+        calc(100% - var(--degrau)) 0, calc(100% - var(--degrau)) var(--degrau), 100% var(--degrau),
+        100% calc(100% - var(--degrau)), calc(100% - var(--degrau)) calc(100% - var(--degrau)),
+        calc(100% - var(--degrau)) 100%, var(--degrau) 100%, var(--degrau) calc(100% - var(--degrau)),
+        0 calc(100% - var(--degrau))
+    );
+}
+
+.btn:hover {
+    --cor: var(--giz);
+    color: var(--arena);
+}
+
+/* O clip-path corta o outline; o foco vira um anel interno */
+.btn:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 3px var(--arena), inset 0 0 0 6px var(--giz);
+}
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: progress;
+}
+
+.btn-lilas {
+    --cor: var(--lilas);
+}
+
+/* Link de ação secundária ao lado de um botão */
+.link-acao {
+    font-weight: 700;
+    padding-block: 0.85rem;
+}
+
+/* ---------- Formulários ---------- */
+
+.campo {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.campo label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    background: var(--arena);
+    border: 2px solid var(--contorno);
+    border-radius: 0;
+}
+
+.campo textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.campo :is(input, textarea, select):focus-visible {
+    outline: none;
+    border-color: var(--azul);
+}
+
+.campo-check {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.9375rem;
+}
+
+.campo-check input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.2rem;
+    accent-color: var(--azul);
+}
+
+/* ---------- Acessibilidade ---------- */
+
+.pular {
+    position: absolute;
+    left: var(--respiro);
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--azul);
+    color: var(--arena);
+    font-weight: 700;
+}
+
+.pular:focus {
+    top: 0.75rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- Ícones: só o spinner dos formulários (src/scripts/web3forms.ts) ---------- */
+
+.icon {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: -0.125em;
+}
+
+.icon svg {
+    display: block;
+    height: 1em;
+    width: auto;
+    fill: currentColor;
+}
+
+.icon-spin svg {
+    animation: girar 1.2s steps(8) infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Mensagem de envio dos formulários (src/scripts/web3forms.ts) */
+[role='status']:not(:empty) {
+    margin-top: 0.75rem;
+    font-weight: 600;
+    color: var(--azul);
+}
+
+[role='status'].erro {
+    color: #ff8f8f;
+}
+
+main:focus {
+    outline: none;
+}

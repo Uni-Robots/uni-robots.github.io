@@ -1,26 +1,39 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import RobotSheet from '../components/RobotSheet.astro';
 import ResenhaEasterEgg from '../components/ResenhaEasterEgg.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const robots = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout
-    title="Projetos"
+    title="Robôs"
     description="Os robôs da UniRobot: seguidor de linha, hockey, sumô mini e sumô Lego autônomos e artbot."
 >
-    <main class="page-main">
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Nossos Projetos</h2>
-            <div id="projects-grid" class="projects-grid">
-                {projects.map((project) => <ProjectCard project={project} />)}
-            </div>
+    <div class="container abertura">
+        <h1>Robôs</h1>
+        <p>
+            Cada robô é projetado, montado e programado pela equipe.
+            Os de sumô são autônomos: depois da largada, ninguém controla.
+        </p>
+    </div>
+
+    <section class="container fim" aria-label="Lista de robôs">
+        <div class="sumula">
+            {robots.map((robot) => <RobotSheet robot={robot} />)}
         </div>
     </section>
-    </main>
 
     <ResenhaEasterEgg />
 </BaseLayout>
+
+<style>
+    .sumula {
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .fim {
+        padding-bottom: var(--secao);
+    }
+</style>

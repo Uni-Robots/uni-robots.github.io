@@ -1,5 +1,4 @@
 ---
-import Icon from '../components/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -7,66 +6,138 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     title="Contato"
     description="Fale com a UniRobot sobre parcerias, patrocínios ou para entrar na equipe de robótica. São José dos Pinhais, PR."
 >
-    <main class="page-main">
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Entre em Contato</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Vamos conversar!</h3>
-                    <p>Entre em contato conosco para parcerias, patrocínios ou para saber mais sobre a UniRobot.</p>
-                    <div class="info-item">
-                        <Icon name="envelope" />
-                        <span>equipe.unirobot@gmail.com</span>
-                    </div>
-                    <div class="info-item">
-                        <Icon name="phone" />
-                        <span>(41) 98888-1220</span>
-                    </div>
-                    <div class="info-item">
-                        <Icon name="location-dot" />
-                        <span>São José dos Pinhais, PR</span>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/unirobot_/" target="_blank" aria-label="Instagram"><Icon name="instagram" /></a>
-                        <a href="https://github.com/Uni-Robots" target="_blank" aria-label="GitHub"><Icon name="github" /></a>
-                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-                    </div>
-                </div>
-                <form id="contactForm" class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" required>
-                        <label for="name">Nome</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required>
-                        <label for="email">E-mail</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" required>
-                        <label for="subject">Assunto</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" required></textarea>
-                        <label for="message">Mensagem</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
-                </form>
+    <div class="container abertura">
+        <h1>Contato</h1>
+        <p>Para entrar na equipe, propor uma parceria ou tirar dúvidas.</p>
+    </div>
+
+    <div class="container fim">
+        <dl class="dados">
+            <div>
+                <dt>E-mail</dt>
+                <dd><a href="mailto:equipe.unirobot@gmail.com">equipe.unirobot@gmail.com</a></dd>
             </div>
-        </div>
-    </section>
-    </main>
+            <div>
+                <dt>Telefone</dt>
+                <dd><a href="tel:+5541988881220">(41) 98888-1220</a></dd>
+            </div>
+            <div>
+                <dt>Cidade</dt>
+                <dd>São José dos Pinhais, PR</dd>
+            </div>
+            <div>
+                <dt>Redes</dt>
+                <dd class="redes">
+                    <a href="https://www.instagram.com/unirobot_/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://github.com/Uni-Robots" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </dd>
+            </div>
+        </dl>
+
+        <form id="contactForm" class="formulario">
+            <h2 class="titulo-form">Mande uma mensagem</h2>
+            <div class="duplo">
+                <div class="campo">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" autocomplete="name" required>
+                </div>
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label for="subject">Assunto</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="campo">
+                <label for="message">Mensagem</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn">Enviar mensagem</button>
+            <p role="status" aria-live="polite"></p>
+        </form>
+    </div>
 </BaseLayout>
 
+<style>
+    .fim {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: clamp(2.5rem, 6vw, 5rem);
+        align-items: start;
+        padding-bottom: var(--secao);
+    }
+
+    .dados {
+        border-top: 2px solid var(--linha);
+    }
+
+    .dados div {
+        padding-block: 1rem;
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .dados dt {
+        font-size: 0.875rem;
+        color: var(--neblina);
+    }
+
+    .dados dd {
+        font-weight: 600;
+        font-size: var(--t-1);
+        overflow-wrap: anywhere;
+    }
+
+    .redes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1.25rem;
+    }
+
+    .formulario {
+        display: grid;
+        gap: 1.25rem;
+    }
+
+    .titulo-form {
+        font-size: var(--t-2);
+    }
+
+    .formulario .btn {
+        justify-self: start;
+    }
+
+    .duplo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    @media (max-width: 820px) {
+        .fim {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .duplo {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
 <script>
-    import { ACCESS_KEYS, handleWeb3Form } from '../scripts/web3forms';
+    import { ACCESS_KEYS, SPINNER_HTML, handleWeb3Form } from '../scripts/web3forms';
 
     handleWeb3Form(document.querySelector<HTMLFormElement>('#contactForm'), {
         accessKey: ACCESS_KEYS.contato, // o assunto vem do próprio campo "subject" do formulário
-        busyHTML: 'Enviando...',
+        busyHTML: `${SPINNER_HTML} Enviando`,
         onSuccess: (form) => {
-            alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
             form.reset();
+            const status = form.querySelector('[role="status"]');
+            if (status) status.textContent = 'Mensagem enviada. A equipe responde pelo e-mail que você informou.';
         },
     });
 </script>

@@ -20,6 +20,20 @@ interface Options {
     onSuccess: (form: HTMLFormElement) => void;
 }
 
+const FALLBACK = 'Tente de novo ou escreva para equipe.unirobot@gmail.com.';
+
+/** Mostra o erro no elemento role="status" do formulário (ou num alerta, se não houver). */
+function showError(form: HTMLFormElement, what: string) {
+    const status = form.querySelector<HTMLElement>('[role="status"]');
+    const message = `${what} ${FALLBACK}`;
+    if (status) {
+        status.textContent = message;
+        status.classList.add('erro');
+    } else {
+        alert(message);
+    }
+}
+
 /** Intercepta o submit do formulário e envia para o Web3Forms. Não faz nada se o form não existir. */
 export function handleWeb3Form(form: HTMLFormElement | null, { accessKey, subject, busyHTML, onSuccess }: Options) {
     if (!form) return;
@@ -33,18 +47,23 @@ export function handleWeb3Form(form: HTMLFormElement | null, { accessKey, subjec
         if (subject) data.append('subject', subject(data));
 
         const original = button.innerHTML;
+        const status = form.querySelector<HTMLElement>('[role="status"]');
+        if (status) {
+            status.textContent = '';
+            status.classList.remove('erro');
+        }
         button.innerHTML = busyHTML;
         button.disabled = true;
         try {
             const response = await fetch(ENDPOINT, { method: 'POST', body: data });
-            const result = await response.json();
+            const result = await response.json().catch(() => ({}));
             if (response.ok) {
                 onSuccess(form);
             } else {
-                alert('❌ Erro: ' + result.message);
+                showError(form, `O envio foi recusado (${result.message ?? response.status}).`);
             }
         } catch {
-            alert('❌ Algo deu errado. Tente novamente.');
+            showError(form, 'Sem conexão com o serviço de envio.');
         } finally {
             button.innerHTML = original;
             button.disabled = false;

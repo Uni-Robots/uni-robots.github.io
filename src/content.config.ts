@@ -34,8 +34,9 @@ const projects = defineCollection({
     loader: file('./src/content/projects.json'),
     schema: z.object({
         title: z.string(),
-        description: z.string(),
-        icon: z.string(), // nome de um arquivo em src/icons/ (sem .svg)
+        category: z.string(), // modalidade, ex.: "Sumô mini", "Seguidor de linha"
+        weight: z.string().optional(), // classe de peso, ex.: "500 g"
+        mode: z.string().optional(), // ex.: "Autônomo"
         order: z.number(),
         easterEgg: z.boolean().default(false), // ativa o "Protocolo Resenha" ao clicar
     }),

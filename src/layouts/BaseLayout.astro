@@ -1,11 +1,9 @@
 ---
 import { Font, getImage } from 'astro:assets';
 import logo from '../assets/logo.png';
-import ogSource from '../assets/sobre-equipe.webp';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import '../styles/main.css';
-import '../styles/responsive.css';
+import '../styles/global.css';
 import { canonicalPath, pageSlug } from '../lib/page';
 
 interface Props {
@@ -15,16 +13,24 @@ interface Props {
 
 const {
     title,
-    description = 'UniRobot - Equipe de robótica competitiva. Inovação, tecnologia e robótica para o futuro.',
+    description = 'UniRobot: equipe universitária de robótica competitiva de São José dos Pinhais (PR).',
 } = Astro.props;
 
 const favicon = await getImage({ src: logo, width: 96, format: 'png' });
 
 const fullTitle = `UniRobot - ${title}`;
 const canonical = new URL(canonicalPath(pageSlug(Astro.url)), Astro.site);
-// Prévia ao compartilhar o link (WhatsApp, LinkedIn, Instagram...): 1200x630 em JPEG,
-// formato aceito por todas as redes, recortado da arte da página Sobre.
-const ogImage = await getImage({ src: ogSource, width: 1200, height: 630, fit: 'cover', format: 'jpeg', quality: 85 });
+// Prévia ao compartilhar o link (WhatsApp, LinkedIn...): o logo sobre o fundo do site,
+// 1200x630 em JPEG (formato aceito por todas as redes).
+const ogImage = await getImage({
+    src: logo,
+    width: 1200,
+    height: 630,
+    fit: 'contain',
+    background: '#1a1a2e',
+    format: 'jpeg',
+    quality: 85,
+});
 const ogImageUrl = new URL(ogImage.src, Astro.site);
 ---
 
@@ -32,9 +38,10 @@ const ogImageUrl = new URL(ogImage.src, Astro.site);
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{fullTitle}</title>
         <meta name="description" content={description}>
+        <meta name="theme-color" content="#1a1a2e">
         <link rel="canonical" href={canonical}>
         <link rel="icon" type="image/png" href={favicon.src}>
         <link rel="sitemap" href="/sitemap-index.xml">
@@ -49,30 +56,20 @@ const ogImageUrl = new URL(ogImage.src, Astro.site);
         <meta property="og:image:type" content="image/jpeg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
-        <meta property="og:image:alt" content="UniRobot - Robótica, Inovação e Tecnologia">
+        <meta property="og:image:alt" content="Logo da UniRobot: a palavra Uni e um robô roxo em pixel art">
         <meta name="twitter:card" content="summary_large_image">
 
         <slot name="head" />
-        <Font cssVariable="--font-inter" preload />
-        <script is:inline>
-            // Esconde os cards antes da primeira pintura para a animação de entrada (src/scripts/reveal.ts).
-            // Se o módulo não carregar em 3s, mostra tudo para o conteúdo nunca ficar invisível.
-            if ('IntersectionObserver' in window) {
-                document.documentElement.classList.add('js-reveal');
-                setTimeout(function () {
-                    if (!window.__revealReady) document.documentElement.classList.remove('js-reveal');
-                }, 3000);
-            }
-        </script>
+        <Font cssVariable="--font-text" preload />
+        <Font cssVariable="--font-pixel" preload />
         <!-- Ícones: Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com - CC BY 4.0 -->
     </head>
     <body>
+        <a class="pular" href="#conteudo">Pular para o conteúdo</a>
         <Header />
-        <slot />
+        <main id="conteudo" tabindex="-1">
+            <slot />
+        </main>
         <Footer />
-
-        <script>
-            import '../scripts/reveal';
-        </script>
     </body>
 </html>

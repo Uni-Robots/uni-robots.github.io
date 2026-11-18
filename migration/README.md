@@ -10,6 +10,8 @@ Ferramentas e linha de base da migração para Astro. **Esta pasta (e `legacy/`)
 
 `current/` (ignorada pelo git) guarda as medições de trabalho do site Astro.
 
+> Depois do redesign "Arena" o visual mudou de propósito: `compare.cjs` contra a baseline deixou de ser critério de aprovação. Os pesos e o Lighthouse da baseline continuam valendo como referência de desempenho.
+
 ## Ferramentas
 
 Requerem Playwright instalado globalmente (`npm i -g playwright`, `npx playwright install chromium`).
@@ -18,7 +20,7 @@ Requerem Playwright instalado globalmente (`npm i -g playwright`, `npx playwrigh
 |---|---|
 | `measure.cjs <url> <pasta>` | Pesos/requisições + screenshots das 7 páginas |
 | `compare.cjs [pastaA] [pastaB]` | Diferença pixel a pixel entre screenshots (padrão: `baseline` × `current`); salva `diff/*.png` do que passar do limite (`LIMIT=0.5` %, ajustável por variável de ambiente) |
-| `functional.cjs [url]` | Teste funcional (20 checagens): link ativo, títulos, 25 cards da equipe, animação de entrada e hover, 6 projetos, easter egg, modal e formulários (Web3Forms interceptado, nenhum e-mail real sai). No site antigo, a checagem de hover falha de propósito: o JS antigo anulava o efeito |
+| `functional.cjs [url]` | Teste funcional (21 checagens): título e menu de cada página, link 'pular para o conteúdo', 25 membros com foto, 6 robôs, easter egg (mouse e teclado), modal e formulários (Web3Forms interceptado, nenhum e-mail real sai), menu mobile com aria-expanded. Escrito para o site atual: não roda mais contra `legacy/` |
 | `lighthouse.sh <url> <pasta> [páginas]` | Lighthouse mobile, 3 execuções, guarda a mediana |
 
 ```bash

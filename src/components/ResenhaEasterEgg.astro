@@ -17,7 +17,7 @@ import resenha from '../assets/resenha.webp';
     </div>
 </div>
 
-<div class="resenha-modal" id="protocoloResenhaModal" hidden>
+<div class="resenha-modal" id="protocoloResenhaModal" tabindex="-1" hidden>
     <div class="resenha-content">
         <Image src={resenha} alt="PROTOCOLO RESENHA ATIVADO" />
         <h2>🔓 PROTOCOLO RESENHA ATIVADO! 🔓</h2>
@@ -36,18 +36,18 @@ import resenha from '../assets/resenha.webp';
         justify-content: center;
         align-items: center;
         animation: fadeIn 0.3s ease;
-        font-family: var(--font-inter), sans-serif;
+        font-family: var(--font-text);
     }
 
     .resenha-confirm-box {
-        background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
-        border-radius: 20px;
+        background: var(--noite);
+        border-radius: 0;
         padding: 30px;
         max-width: 400px;
         width: 90%;
         text-align: center;
         animation: zoomIn 0.3s ease;
-        border: 2px solid #00a8ff;
+        border: 2px solid var(--azul);
         box-shadow: 0 0 30px rgba(0, 168, 255, 0.3);
     }
 
@@ -57,7 +57,7 @@ import resenha from '../assets/resenha.webp';
     }
 
     .resenha-confirm-box h3 {
-        color: #00a8ff;
+        color: var(--azul);
         margin-bottom: 15px;
         font-size: 1.3rem;
     }
@@ -76,15 +76,15 @@ import resenha from '../assets/resenha.webp';
 
     .resenha-confirm-actions button {
         padding: 12px 24px;
-        border-radius: 50px;
+        border-radius: 0;
         font-weight: bold;
         cursor: pointer;
     }
 
     #resenhaSim {
-        background: linear-gradient(135deg, #00a8ff, #9c88ff);
+        background: var(--azul);
+        color: var(--arena);
         border: none;
-        color: #fff;
     }
 
     #resenhaNao {
@@ -117,15 +117,15 @@ import resenha from '../assets/resenha.webp';
         height: auto;
         max-width: 100%;
         max-height: 80vh;
-        border-radius: 20px;
+        border-radius: 0;
         box-shadow: 0 0 50px rgba(0, 168, 255, 0.5);
-        border: 3px solid #00a8ff;
+        border: 3px solid var(--azul);
     }
 
     .resenha-content h2 {
-        color: #00a8ff;
+        color: var(--azul);
         margin-top: 20px;
-        font-family: var(--font-inter), sans-serif;
+        font-family: var(--font-text);
         text-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
     }
 
@@ -161,27 +161,46 @@ import resenha from '../assets/resenha.webp';
         }
     }
 
+    const yes = document.getElementById('resenhaSim')!;
+    let origin: HTMLElement | null = null; // card que abriu, para devolver o foco
+
+    const open = (card: HTMLElement) => {
+        origin = card;
+        confirmTitle.textContent = `"${card.querySelector('h3')?.textContent ?? ''}"`;
+        confirm.hidden = false;
+        yes.focus();
+    };
+    const closeAll = () => {
+        confirm.hidden = true;
+        modal.hidden = true;
+        origin?.focus();
+    };
+
     document.querySelectorAll<HTMLElement>('.project-card[data-easter-egg]').forEach((card) => {
         card.addEventListener('click', (event) => {
             event.stopPropagation();
-            confirmTitle.textContent = `"${card.querySelector('h3')?.textContent ?? ''}"`;
-            confirm.hidden = false;
+            open(card);
+        });
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                open(card);
+            }
         });
     });
 
-    document.getElementById('resenhaSim')!.addEventListener('click', () => {
+    yes.addEventListener('click', () => {
         confirm.hidden = true;
         modal.hidden = false;
+        modal.focus();
         playBeep();
     });
-    document.getElementById('resenhaNao')!.addEventListener('click', () => (confirm.hidden = true));
+    document.getElementById('resenhaNao')!.addEventListener('click', closeAll);
     confirm.addEventListener('click', (event) => {
-        if (event.target === confirm) confirm.hidden = true;
+        if (event.target === confirm) closeAll();
     });
-    modal.addEventListener('click', () => (modal.hidden = true));
+    modal.addEventListener('click', closeAll);
     document.addEventListener('keydown', (event) => {
-        if (event.key !== 'Escape') return;
-        confirm.hidden = true;
-        modal.hidden = true;
+        if (event.key === 'Escape' && (!confirm.hidden || !modal.hidden)) closeAll();
     });
 </script>

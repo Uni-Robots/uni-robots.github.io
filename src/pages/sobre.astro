@@ -1,44 +1,126 @@
 ---
 import { Image } from 'astro:assets';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import sobreEquipe from '../assets/sobre-equipe.webp';
 import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-const totalMembros = (await getCollection('team')).length;
+const membros = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+
+const ficha = [
+    { rotulo: 'Fundação', valor: '2020' },
+    { rotulo: 'Cidade', valor: 'São José dos Pinhais, PR' },
+    { rotulo: 'Membros', valor: String(membros.length) },
+    { rotulo: 'Competições', valor: 'Mais de 5' },
+    { rotulo: 'Prêmios', valor: 'Mais de 5' },
+    { rotulo: 'Áreas', valor: 'Programação, eletrônica, montagem e marketing' },
+];
 ---
 
 <BaseLayout
     title="Sobre"
-    description="Conheça a UniRobot, equipe de robótica competitiva fundada em 2020 por estudantes universitários apaixonados por tecnologia, engenharia e inovação."
+    description="Conheça a UniRobot, equipe de robótica competitiva fundada em 2020 por estudantes universitários de São José dos Pinhais (PR)."
 >
-    <main class="page-main">
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">Sobre a UniRobot</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>A UniRobot é uma equipe de robótica competitiva formada por estudantes universitários apaixonados por tecnologia, engenharia e inovação.</p>
-                    <p>Fundada em 2020, já participamos de diversas competições nacionais e internacionais, sempre buscando superar desafios e desenvolver soluções criativas para problemas complexos.</p>
-                    <div class="stats">
-                        <div class="stat">
-                            <h3>5+</h3>
-                            <p>Competições</p>
-                        </div>
-                        <div class="stat">
-                            <h3>{totalMembros}</h3>
-                            <p>Membros</p>
-                        </div>
-                        <div class="stat">
-                            <h3>5+</h3>
-                            <p>Prêmios</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <Image src={sobreEquipe} alt="Equipe UniRobot" width={800} widths={[400, 800, 1200]} sizes="(max-width: 1024px) 92vw, 556px" />
-                </div>
-            </div>
+    <div class="container abertura">
+        <h1>Sobre a UniRobot</h1>
+        <p>Uma equipe de estudantes universitários que constrói robôs para competir.</p>
+    </div>
+
+    <div class="container conteudo">
+        <div class="texto">
+            <p>
+                A UniRobot nasceu em 2020, formada por estudantes universitários que gostam de tecnologia,
+                engenharia e de colocar a mão na massa.
+            </p>
+            <p>
+                Desde então a equipe participou de competições nacionais e internacionais, com robôs
+                de sumô, seguidor de linha, hockey e artbot. O trabalho se divide em quatro áreas:
+                montagem, eletrônica, programação e marketing.
+            </p>
         </div>
+
+        <dl class="ficha">
+            {ficha.map(({ rotulo, valor }) => (
+                <div>
+                    <dt>{rotulo}</dt>
+                    <dd>{valor}</dd>
+                </div>
+            ))}
+        </dl>
+    </div>
+
+    <section class="container secao" aria-labelledby="mosaico-titulo">
+        <h2 id="mosaico-titulo">Quem faz</h2>
+        <a href="/equipe.html" class="mosaico" aria-label={`Conheça as ${membros.length} pessoas da equipe`}>
+            {membros.map(({ data }) => (
+                <Image src={data.photo} alt="" width={96} widths={[96, 192]} sizes="96px" />
+            ))}
+        </a>
+        <p class="apoio"><a href="/equipe.html">Conheça as {membros.length} pessoas da equipe</a></p>
     </section>
-    </main>
 </BaseLayout>
+
+<style>
+    .conteudo {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: clamp(2rem, 6vw, 5rem);
+        align-items: start;
+    }
+
+    .texto {
+        display: grid;
+        gap: 1.25rem;
+    }
+
+    .ficha {
+        border-top: 2px solid var(--linha);
+    }
+
+    .ficha div {
+        display: grid;
+        grid-template-columns: 8rem 1fr;
+        gap: 1rem;
+        padding-block: 0.75rem;
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .ficha dt {
+        color: var(--neblina);
+    }
+
+    .ficha dd {
+        font-weight: 600;
+    }
+
+    h2 {
+        margin-bottom: 1.5rem;
+    }
+
+    .mosaico {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+        gap: 4px;
+    }
+
+    .mosaico :global(img) {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.05);
+    }
+
+    .mosaico:hover :global(img),
+    .mosaico:focus-visible :global(img) {
+        filter: none;
+    }
+
+    .mosaico + .apoio {
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 820px) {
+        .conteudo {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

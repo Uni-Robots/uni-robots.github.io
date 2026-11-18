@@ -1,32 +1,86 @@
 ---
-import Icon from '../components/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const redes = [
+    { nome: 'Instagram', perfil: '@unirobot_', href: 'https://www.instagram.com/unirobot_/', uso: 'Fotos e novidades da equipe.' },
+    { nome: 'GitHub', perfil: 'Uni-Robots', href: 'https://github.com/Uni-Robots', uso: 'Código da equipe, incluindo o deste site.' },
+    // TODO: trocar pelo endereço da página da equipe no LinkedIn (hoje aponta para a página inicial do LinkedIn).
+    { nome: 'LinkedIn', perfil: 'linkedin.com', href: 'https://linkedin.com', uso: 'Página da equipe no LinkedIn.' },
+];
 ---
 
 <BaseLayout
     title="Redes Sociais"
     description="Acompanhe a UniRobot nas redes sociais: Instagram, GitHub e LinkedIn."
 >
-    <main class="page-main">
-    <section id="social" class="social">
-        <div class="container">
-            <h2 class="section-title">Nossas Redes Sociais</h2>
-            <p class="social-subtitle">Acompanhe nossa jornada nas redes sociais</p>
-            <div class="social-grid">
-                <a href="https://www.instagram.com/unirobot_/" target="_blank" class="social-card" title="Instagram">
-                    <Icon name="instagram" />
-                    <h3>Instagram</h3>
-                </a>
-                <a href="https://github.com/Uni-Robots" target="_blank" class="social-card" title="GitHub">
-                    <Icon name="github" />
-                    <h3>GitHub</h3>
-                </a>
-                <a href="https://linkedin.com" target="_blank" class="social-card" title="LinkedIn">
-                    <Icon name="linkedin" />
-                    <h3>LinkedIn</h3>
-                </a>
-            </div>
-        </div>
-    </section>
-    </main>
+    <div class="container abertura">
+        <h1>Redes</h1>
+        <p>Onde a equipe publica o que está construindo.</p>
+    </div>
+
+    <div class="container fim">
+        <ul class="lista">
+            {redes.map(({ nome, perfil, href, uso }) => (
+                <li class="social-card">
+                    <a href={href} target="_blank" rel="noopener noreferrer">
+                        <span class="nome">{nome}</span>
+                        <span class="perfil">{perfil}</span>
+                    </a>
+                    <p class="apoio">{uso}</p>
+                </li>
+            ))}
+        </ul>
+    </div>
 </BaseLayout>
+
+<style>
+    .fim {
+        padding-bottom: var(--secao);
+    }
+
+    .lista {
+        list-style: none;
+        padding: 0;
+        border-top: 2px solid var(--linha);
+    }
+
+    .lista li {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 2rem;
+        align-items: baseline;
+        padding-block: 1.5rem;
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .lista a {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25rem 1rem;
+        text-decoration: none;
+    }
+
+    .nome {
+        font-family: var(--font-pixel);
+        font-size: var(--t-2);
+        color: var(--giz);
+    }
+
+    .perfil {
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.2em;
+    }
+
+    .lista a:hover .nome {
+        color: var(--azul);
+    }
+
+    @media (max-width: 640px) {
+        .lista li {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

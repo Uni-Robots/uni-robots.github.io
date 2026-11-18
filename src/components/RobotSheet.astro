@@ -1,0 +1,109 @@
+---
+// Ficha de um robô, como numa súmula de competição: nome + modalidade, peso e modo.
+// Robôs com `easterEgg` abrem o "Protocolo Resenha" (ResenhaEasterEgg.astro).
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    robot: CollectionEntry<'projects'>;
+}
+
+const { title, category, weight, mode, easterEgg } = Astro.props.robot.data;
+const campos = [
+    { rotulo: 'Modalidade', valor: category },
+    { rotulo: 'Peso', valor: weight },
+    { rotulo: 'Modo', valor: mode },
+];
+---
+
+<article
+    class:list={['project-card', 'ficha', { 'sumo-project': easterEgg }]}
+    data-easter-egg={easterEgg ? '' : undefined}
+    tabindex={easterEgg ? 0 : undefined}
+>
+    <h3 class="nome">{title}</h3>
+    <dl class="dados">
+        {campos.map(({ rotulo, valor }) => (
+            <div>
+                <dt>{rotulo}</dt>
+                {valor ? <dd>{valor}</dd> : <dd class="vazio"><span aria-hidden="true">—</span><span class="sr-only">não se aplica</span></dd>}
+            </div>
+        ))}
+    </dl>
+    {easterEgg && <p class="sumo-tooltip" aria-hidden="true">Clique para ativar o Protocolo Resenha</p>}
+</article>
+
+<style>
+    .ficha {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(12rem, 1.2fr) 2fr;
+        gap: 0.5rem 2rem;
+        align-items: baseline;
+        padding-block: 1.4rem;
+        border-top: 2px solid var(--linha);
+    }
+
+    .nome {
+        font-family: var(--font-pixel);
+        font-size: var(--t-2);
+        font-weight: 500;
+        line-height: 1.1;
+    }
+
+    .dados {
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr 0.8fr;
+        gap: 1.5rem;
+    }
+
+    dt {
+        font-size: 0.8125rem;
+        color: var(--neblina);
+    }
+
+    dd {
+        font-weight: 600;
+    }
+
+    .vazio {
+        color: var(--neblina);
+    }
+
+    /* Easter egg: os robôs de sumô */
+    .sumo-project {
+        cursor: pointer;
+    }
+
+    .sumo-project:hover .nome,
+    .sumo-project:focus-visible .nome {
+        color: var(--lilas);
+    }
+
+    .sumo-tooltip {
+        position: absolute;
+        right: 0;
+        top: -1rem;
+        padding: 0.3rem 0.6rem;
+        background: var(--lilas);
+        color: var(--arena);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .sumo-project:hover .sumo-tooltip,
+    .sumo-project:focus-visible .sumo-tooltip {
+        opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+        .ficha {
+            grid-template-columns: 1fr;
+        }
+
+        .dados {
+            gap: 1rem;
+        }
+    }
+</style>

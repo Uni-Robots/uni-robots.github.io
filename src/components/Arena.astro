@@ -1,0 +1,134 @@
+---
+// Elemento principal da página inicial: a arena (dohyo) do sumô de robôs no momento da
+// largada — o mascote do logo de um lado das linhas, um adversário do outro.
+// É o único movimento automático do site (uma vez, ao carregar).
+import { getImage } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+// Cabeça do robô: recorte do lado direito do próprio logo (1024 x 450).
+const mascote = await getImage({ src: logo, width: 430, height: 450, fit: 'cover', position: 'right', format: 'webp' });
+---
+
+<figure class="arena">
+    <div class="palco">
+        <svg viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+            <circle class="disco" cx="200" cy="200" r="184" />
+            <circle class="borda" cx="200" cy="200" r="184" pathLength="100" />
+            <rect class="largada" x="182" y="160" width="8" height="80" />
+            <rect class="largada" x="210" y="160" width="8" height="80" />
+            <!-- Adversário em pixel: corpo, visor e olhos, virado para o mascote -->
+            <g class="adversario">
+                <rect x="242" y="150" width="100" height="100" />
+                <rect class="visor" x="250" y="170" width="62" height="34" />
+                <rect class="olho" x="258" y="182" width="12" height="10" />
+                <rect class="olho" x="284" y="182" width="12" height="10" />
+                <rect class="lamina" x="228" y="214" width="14" height="26" />
+            </g>
+        </svg>
+        <img class="mascote" src={mascote.src} width="430" height="450" alt="" decoding="async" fetchpriority="high">
+    </div>
+    <figcaption>Arena do sumô mini: 77 cm de diâmetro, para robôs de até 500 g.</figcaption>
+</figure>
+
+<style>
+    .arena {
+        width: min(100%, 26rem);
+        margin-inline: auto;
+    }
+
+    .palco {
+        position: relative;
+    }
+
+    svg {
+        width: 100%;
+        height: auto;
+    }
+
+    .disco {
+        fill: var(--arena);
+    }
+
+    .borda {
+        fill: none;
+        stroke: var(--giz);
+        stroke-width: 12;
+        stroke-dasharray: 100;
+        animation: desenhar 0.9s steps(16) both;
+    }
+
+    .largada {
+        fill: var(--lilas);
+        animation: aparecer 0.08s linear 0.95s both;
+    }
+
+    .adversario {
+        fill: var(--noite);
+        stroke: var(--lilas);
+        stroke-width: 4;
+        transform-box: fill-box;
+        animation: entrar-direita 0.45s steps(5) 1.1s both;
+    }
+
+    .adversario .visor {
+        fill: var(--linha);
+        stroke: none;
+    }
+
+    .adversario .olho {
+        fill: var(--lilas);
+        stroke: none;
+    }
+
+    .adversario .lamina {
+        fill: var(--lilas);
+        stroke: none;
+    }
+
+    /* Mascote do lado esquerdo das linhas (centro em x ≈ 30% da arena) */
+    .mascote {
+        position: absolute;
+        left: 30%;
+        top: 50%;
+        width: 31%;
+        height: auto;
+        translate: -50% -56%;
+        animation: entrar-esquerda 0.45s steps(5) 1.1s both;
+    }
+
+    figcaption {
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--neblina);
+        text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .borda,
+        .largada,
+        .adversario,
+        .mascote {
+            animation: none;
+        }
+    }
+
+    @keyframes desenhar {
+        from { stroke-dashoffset: 100; }
+        to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes aparecer {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes entrar-esquerda {
+        from { opacity: 0; transform: translateX(-60%); }
+        to { opacity: 1; transform: none; }
+    }
+
+    @keyframes entrar-direita {
+        from { opacity: 0; transform: translateX(60%); }
+        to { opacity: 1; transform: none; }
+    }
+</style>

@@ -16,23 +16,26 @@ export default defineConfig({
             },
         }),
     ],
-    // Inter servida pelo próprio site. O arquivo é exatamente o que o Google Fonts entrega
-    // (variável, subset latin, só estilo normal — o site não usa itálico); o provider
-    // google() do Astro baixa outra versão da Inter, com métricas diferentes.
-    // Licença: src/assets/fonts/OFL.txt
+    // Fontes servidas pelo próprio site: arquivos variáveis do Google Fonts, subset latin.
+    // Pixelify Sans só nos títulos (ecoa o pixel art do logo); Archivo no resto.
+    // Licenças: src/assets/fonts/OFL-*.txt
     fonts: [
         {
             provider: fontProviders.local(),
-            name: 'Inter',
-            cssVariable: '--font-inter',
+            name: 'Pixelify Sans',
+            cssVariable: '--font-pixel',
+            fallbacks: ['monospace'],
             options: {
-                variants: [
-                    {
-                        src: ['./src/assets/fonts/inter-latin-wght.woff2'],
-                        weight: '300 800',
-                        style: 'normal',
-                    },
-                ],
+                variants: [{ src: ['./src/assets/fonts/pixelify-sans-latin-wght.woff2'], weight: '400 700', style: 'normal' }],
+            },
+        },
+        {
+            provider: fontProviders.local(),
+            name: 'Archivo',
+            cssVariable: '--font-text',
+            fallbacks: ['sans-serif'],
+            options: {
+                variants: [{ src: ['./src/assets/fonts/archivo-latin-wght.woff2'], weight: '400 800', style: 'normal' }],
             },
         },
     ],

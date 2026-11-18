@@ -3,48 +3,178 @@ import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
 import { pageSlug } from '../lib/page';
 
+// "Início" é o próprio logo; "Redes" fica no rodapé.
 const nav = [
-    { slug: 'index', label: 'Início' },
     { slug: 'sobre', label: 'Sobre' },
-    { slug: 'projetos', label: 'Projetos' },
+    { slug: 'projetos', label: 'Robôs' },
     { slug: 'equipe', label: 'Equipe' },
-    { slug: 'patrocinadores', label: 'Patrocinadores' },
-    { slug: 'redes', label: 'Redes Sociais' },
+    { slug: 'patrocinadores', label: 'Patrocínio' },
     { slug: 'contato', label: 'Contato' },
 ];
 
 const current = pageSlug(Astro.url);
 ---
 
-<header class="header">
-    <nav class="navbar">
-        <div class="logo">
-            <a href="/index.html"><Image src={logo} alt="UniRobot Logo" class="logo-img" width={150} widths={[150, 300]} sizes="150px" loading="eager" /></a>
-        </div>
-        <ul class="nav-menu">
+<header class="topo">
+    <nav class="container barra" aria-label="Principal">
+        <a href="/index.html" class="marca" aria-current={current === 'index' ? 'page' : undefined}>
+            <Image src={logo} alt="UniRobot — página inicial" width={140} widths={[140, 280]} sizes="140px" loading="eager" />
+        </a>
+        <button class="hamburger" type="button" aria-expanded="false" aria-controls="menu-principal">
+            <span class="sr-only">Menu</span>
+            <span class="hamburger-linhas" aria-hidden="true"></span>
+        </button>
+        <ul class="nav-menu" id="menu-principal">
             {nav.map(({ slug, label }) => (
-                <li><a href={`/${slug}.html`} class:list={['nav-link', { active: slug === current }]}>{label}</a></li>
+                <li>
+                    <a
+                        href={`/${slug}.html`}
+                        class:list={['nav-link', { active: slug === current }]}
+                        aria-current={slug === current ? 'page' : undefined}
+                    >{label}</a>
+                </li>
             ))}
         </ul>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </nav>
 </header>
 
+<style>
+    .topo {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--noite);
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .barra {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        min-height: 4.5rem;
+    }
+
+    .marca img {
+        width: 140px;
+        height: auto;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 0.25rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.5rem 0.85rem;
+        color: var(--giz);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+        border-bottom-color: var(--linha);
+    }
+
+    .nav-link.active {
+        border-bottom-color: var(--azul);
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    @media (max-width: 760px) {
+        .hamburger {
+            display: grid;
+            place-items: center;
+            width: 3rem;
+            height: 3rem;
+            background: none;
+            border: 2px solid var(--contorno);
+            cursor: pointer;
+        }
+
+        /* Três barras; viram um "x" quando aberto */
+        .hamburger-linhas,
+        .hamburger-linhas::before,
+        .hamburger-linhas::after {
+            display: block;
+            width: 1.25rem;
+            height: 3px;
+            background: var(--giz);
+        }
+
+        .hamburger-linhas {
+            position: relative;
+        }
+
+        .hamburger-linhas::before,
+        .hamburger-linhas::after {
+            content: '';
+            position: absolute;
+            left: 0;
+        }
+
+        .hamburger-linhas::before { top: -7px; }
+        .hamburger-linhas::after { top: 7px; }
+
+        .hamburger[aria-expanded='true'] .hamburger-linhas { background: transparent; }
+        .hamburger[aria-expanded='true'] .hamburger-linhas::before { top: 0; transform: rotate(45deg); }
+        .hamburger[aria-expanded='true'] .hamburger-linhas::after { top: 0; transform: rotate(-45deg); }
+
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 2px);
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            gap: 0;
+            padding: 0.5rem var(--respiro) 1.5rem;
+            background: var(--noite);
+            border-bottom: 2px solid var(--linha);
+        }
+
+        .nav-menu.active {
+            display: flex;
+        }
+
+        .nav-link {
+            padding: 0.9rem 0;
+            font-size: var(--t-1);
+            border-bottom: 2px solid var(--linha);
+        }
+
+        .nav-link.active {
+            color: var(--azul);
+            border-bottom-color: var(--linha);
+        }
+    }
+</style>
+
 <script>
-    // Menu hambúrguer (mobile): abre/fecha e trava a rolagem da página enquanto aberto.
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+    // Menu mobile: abre/fecha, atualiza aria-expanded e fecha com Esc ou ao escolher um link.
+    const button = document.querySelector<HTMLButtonElement>('.hamburger');
+    const menu = document.querySelector('.nav-menu');
 
     const setOpen = (open: boolean) => {
-        hamburger?.classList.toggle('active', open);
-        navMenu?.classList.toggle('active', open);
-        document.body.style.overflow = open ? 'hidden' : '';
+        button?.setAttribute('aria-expanded', String(open));
+        button?.classList.toggle('active', open);
+        menu?.classList.toggle('active', open);
     };
 
-    hamburger?.addEventListener('click', () => setOpen(!navMenu?.classList.contains('active')));
+    button?.addEventListener('click', () => setOpen(!menu?.classList.contains('active')));
     document.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu?.classList.contains('active')) {
+            setOpen(false);
+            button?.focus();
+        }
+    });
 </script>

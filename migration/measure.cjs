@@ -88,7 +88,7 @@ async function measure(browser, name, vpName) {
     if (name === 'patrocinadores') {
         await page.click('#openSponsorModalBtn');
         await page.waitForTimeout(800);
-        await page.locator('.sponsor-modal-content').screenshot({
+        await page.locator('#sponsorModal [role="dialog"]').screenshot({
             path: path.join(shotDir, `patrocinadores-modal-${vpName}.jpg`),
             type: 'jpeg', quality: 70, animations: 'disabled',
         });

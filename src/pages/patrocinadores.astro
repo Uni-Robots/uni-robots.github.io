@@ -1,195 +1,308 @@
 ---
 import { Image } from 'astro:assets';
-import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
 
-// Os logos ficam numa caixa com object-fit: contain; a largura exibida depende da proporção de cada
-// logo (logo alto é limitado pela altura). Caixas: carrossel até 150x86, cards até 260x73.
-const shownWidth = (logo: ImageMetadata, boxW: number, boxH: number) =>
-    Math.round(Math.min(boxW, (boxH * logo.width) / logo.height));
+// Os logos ficam numa caixa com object-fit: contain; a largura exibida depende da proporção
+// de cada logo (logo alto é limitado pela altura). Caixa: até 220 x 96.
+const shownWidth = (logo: ImageMetadata) => Math.round(Math.min(220, (96 * logo.width) / logo.height));
+
+const niveis = [
+    { nome: 'Bronze', valor: 'R$ 100' },
+    { nome: 'Prata', valor: 'R$ 200' },
+    { nome: 'Ouro', valor: 'R$ 500' },
+    { nome: 'Platina', valor: 'R$ 1.000 ou mais' },
+];
+
+const contrapartidas = [
+    'Logo no site e nos materiais da equipe',
+    'Certificado de parceria',
+    'Menção nas redes sociais',
+    'Destaque nos vídeos',
+];
 ---
 
 <BaseLayout
-    title="Patrocinadores"
+    title="Patrocínio"
     description="Empresas e instituições que apoiam a UniRobot, e como sua empresa pode patrocinar a equipe de robótica."
 >
-    <main class="page-main">
-    <section id="sponsors" class="sponsors">
-        <div class="container">
-            <h2 class="section-title">Nossos Patrocinadores</h2>
-            <div class="sponsor-marquee" role="region" aria-label="Patrocinadores da UniRobot">
-                <div class="sponsor-marquee-track">
-                    {/* O grupo é repetido para o carrossel girar sem emenda; a cópia fica oculta para leitores de tela. */}
-                    {[false, true].map((copy) => (
-                        <div class="sponsor-marquee-group" aria-hidden={copy ? 'true' : undefined}>
-                            {sponsors.map(({ data }) => (
-                                <div class="sponsor-marquee-item"><Image src={data.logo} alt={copy ? '' : data.alt} width={shownWidth(data.logo, 150, 86)} densities={[1, 2]} /></div>
-                            ))}
-                        </div>
-                    ))}
+    <div class="container abertura">
+        <h1>Patrocínio</h1>
+        <p>Estas empresas e instituições apoiam a UniRobot.</p>
+    </div>
+
+    <section class="container" aria-label="Patrocinadores atuais">
+        <ul class="parceiros">
+            {sponsors.map(({ data }) => (
+                <li>
+                    <div class="logo">
+                        <Image src={data.logo} alt={data.alt} width={shownWidth(data.logo)} densities={[1, 2]} />
+                    </div>
+                    <h2 class="nome">{data.name}</h2>
+                    <p>{data.description}</p>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="container secao proposta" aria-labelledby="seja-titulo">
+        <div>
+            <h2 id="seja-titulo">Seja patrocinador</h2>
+            <p class="apoio">
+                Escolha um dos níveis ao lado ou proponha outro valor ou formato de apoio.
+                A equipe responde em até 24 h.
+            </p>
+            <button type="button" class="btn" id="openSponsorModalBtn" aria-haspopup="dialog">Enviar proposta</button>
+        </div>
+        <dl class="niveis">
+            {niveis.map(({ nome, valor }) => (
+                <div>
+                    <dt>{nome}</dt>
+                    <dd>{valor}</dd>
                 </div>
-            </div>
-            <div class="sponsor-details">
-                <h3 class="sponsor-details-title">Conheça nossos parceiros</h3>
-                <div class="sponsor-details-grid">
-                    {sponsors.map(({ data }) => (
-                        <article class="sponsor-detail-card">
-                            <div class="sponsor-detail-logo"><Image src={data.logo} alt={data.alt} width={shownWidth(data.logo, 260, 73)} densities={[1, 2]} /></div>
-                            <h3>{data.name}</h3>
-                            <p>{data.description}</p>
-                        </article>
-                    ))}
-                </div>
-            </div>
-            <div class="sponsor-message">
-                <p>Seja um patrocinador da UniRobot e faça parte dessa jornada!</p>
-                <a href="#" class="btn btn-outline" id="openSponsorModalBtn">Torne-se um Patrocinador</a>
-            </div>
+            ))}
+        </dl>
+        <div>
+            <h3>O que a empresa recebe</h3>
+            <ul class="contrapartidas">
+                {contrapartidas.map((item) => <li>{item}</li>)}
+            </ul>
         </div>
     </section>
-    </main>
 
-    {/* Modal de Patrocínio */}
     <div id="sponsorModal" class="sponsor-modal">
-        <div class="sponsor-modal-content">
-            <span class="sponsor-modal-close">&times;</span>
+        <div class="janela" role="dialog" aria-modal="true" aria-labelledby="proposta-titulo">
+            <button type="button" class="sponsor-modal-close" aria-label="Fechar">&times;</button>
+            <h2 id="proposta-titulo">Proposta de patrocínio</h2>
+            <p class="apoio">A equipe responde em até 24 h pelo e-mail informado.</p>
 
-            <div class="sponsor-modal-header">
-                <div class="sponsor-icon-animation">
-                    <Icon name="handshake" />
-                    <Icon name="star" class="sponsor-star-1" />
-                    <Icon name="star" class="sponsor-star-2" />
-                    <Icon name="star" class="sponsor-star-3" />
+            <form id="sponsorForm" class="formulario">
+                <div class="campo">
+                    <label for="sponsor_name">Empresa ou pessoa</label>
+                    <input type="text" id="sponsor_name" name="name" autocomplete="organization" required>
                 </div>
-                <h2>✨ Seja um Patrocinador ✨</h2>
-                <p>Faça parte da nossa jornada e ajude a construir o futuro da robótica!</p>
-                <div class="sponsor-badge">
-                    <Icon name="trophy" />
-                    <span>Parceiro Oficial</span>
-                </div>
-            </div>
-
-            <div class="sponsor-benefits">
-                <h3><Icon name="gift" /> Benefícios exclusivos</h3>
-                <div class="benefits-grid">
-                    <div class="benefit-item">
-                        <Icon name="chalkboard-user" />
-                        <span>Logo no site e materiais</span>
+                <div class="duplo">
+                    <div class="campo">
+                        <label for="sponsor_email">E-mail</label>
+                        <input type="email" id="sponsor_email" name="email" autocomplete="email" required>
                     </div>
-                    <div class="benefit-item">
-                        <Icon name="certificate" />
-                        <span>Certificado de parceria</span>
-                    </div>
-                    <div class="benefit-item">
-                        <Icon name="users" />
-                        <span>Menção nas redes sociais</span>
-                    </div>
-                    <div class="benefit-item">
-                        <Icon name="video" />
-                        <span>Destaque em vídeos</span>
+                    <div class="campo">
+                        <label for="sponsor_phone">Telefone (opcional)</label>
+                        <input type="tel" id="sponsor_phone" name="phone" autocomplete="tel">
                     </div>
                 </div>
-            </div>
-
-            <form id="sponsorForm" class="sponsor-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" id="sponsor_name" name="name" required>
-                        <label for="sponsor_name">
-                            <Icon name="building" />
-                            Nome da Empresa / Pessoa
-                        </label>
-                    </div>
+                <div class="campo">
+                    <label for="sponsor_tier">Nível de patrocínio</label>
+                    <select id="sponsor_tier" name="sponsor_tier" required>
+                        <option value="">Escolha um nível</option>
+                        {niveis.map(({ nome, valor }) => <option value={nome}>{nome}: {valor}</option>)}
+                        <option value="Outro">Outro valor ou formato</option>
+                    </select>
                 </div>
-
-                <div class="form-row double">
-                    <div class="form-group">
-                        <input type="email" id="sponsor_email" name="email" required>
-                        <label for="sponsor_email">
-                            <Icon name="envelope" />
-                            E-mail para contato
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="sponsor_phone" name="phone">
-                        <label for="sponsor_phone">
-                            <Icon name="phone" />
-                            Telefone (opcional)
-                        </label>
-                    </div>
+                <div class="campo">
+                    <label for="sponsor_message">Mensagem</label>
+                    <textarea id="sponsor_message" name="message" rows="4" required></textarea>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <select id="sponsor_tier" name="sponsor_tier" required>
-                            <option value=""></option>
-                            <option value="Bronze">🥉 Bronze - R$ 100</option>
-                            <option value="Prata">🥈 Prata - R$ 200</option>
-                            <option value="Ouro">🥇 Ouro - R$ 500</option>
-                            <option value="Platina">💎 Platina - R$ 1.000+</option>
-                            <option value="Outro">🤝 Quero conversar sobre valores</option>
-                        </select>
-                        <label for="sponsor_tier">
-                            <Icon name="medal" />
-                            Nível de Patrocínio
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <textarea id="sponsor_message" name="message" rows="4" required></textarea>
-                        <label for="sponsor_message">
-                            <Icon name="comment" />
-                            Mensagem / Proposta
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-check">
+                <label class="campo-check" for="sponsor_terms">
                     <input type="checkbox" id="sponsor_terms" required>
-                    <label for="sponsor_terms">
-                        Concordo em receber comunicações sobre parcerias
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-sponsor-submit">
-                    <Icon name="paper-plane" />
-                    <span>Enviar Proposta</span>
-                    <Icon name="arrow-right" />
-                </button>
+                    Aceito receber e-mails da equipe sobre esta proposta.
+                </label>
+                <button type="submit" class="btn btn-sponsor-submit">Enviar proposta</button>
+                <p role="status" aria-live="polite"></p>
             </form>
-
-            <div class="sponsor-modal-footer">
-                <p>
-                    <Icon name="lock" /> Seus dados estão seguros
-                    <span class="separator">•</span>
-                    <Icon name="reply-all" /> Respondemos em até 24h
-                </p>
-            </div>
         </div>
     </div>
 </BaseLayout>
 
+<style>
+    .parceiros {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        gap: 2.5rem 2rem;
+    }
+
+    /* Os logos foram feitos para fundo claro */
+    .logo {
+        display: grid;
+        place-items: center;
+        height: 8.5rem;
+        padding: 1.25rem;
+        background: var(--papel);
+    }
+
+    .logo :global(img) {
+        max-height: 96px;
+        width: auto;
+        height: auto;
+    }
+
+    .nome {
+        margin-top: 1rem;
+        font-family: var(--font-text);
+        font-size: var(--t-1);
+        font-weight: 700;
+    }
+
+    .parceiros p {
+        margin-top: 0.35rem;
+        color: var(--neblina);
+        font-size: 0.9375rem;
+    }
+
+    .proposta {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr;
+        gap: clamp(2rem, 5vw, 4rem);
+        align-items: start;
+        position: relative;
+        margin-top: var(--secao);
+    }
+
+    /* Régua no topo, alinhada ao conteúdo (não ao padding do container) */
+    .proposta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: var(--respiro);
+        right: var(--respiro);
+        border-top: 2px solid var(--linha);
+    }
+
+    .proposta > div:first-child {
+        display: grid;
+        gap: 1.25rem;
+        justify-items: start;
+    }
+
+    .niveis div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 0.75rem;
+        border-bottom: 2px solid var(--linha);
+    }
+
+    .niveis dt {
+        font-family: var(--font-pixel);
+        font-size: var(--t-1);
+    }
+
+    .niveis dd {
+        font-weight: 600;
+    }
+
+    .proposta h3 {
+        font-size: var(--t-0);
+        margin-bottom: 0.75rem;
+    }
+
+    .contrapartidas {
+        padding-left: 1.1rem;
+        color: var(--neblina);
+        display: grid;
+        gap: 0.4rem;
+    }
+
+    .contrapartidas li::marker {
+        color: var(--lilas);
+    }
+
+    /* Modal */
+    .sponsor-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        overflow-y: auto;
+        padding: clamp(1rem, 5vh, 4rem) var(--respiro);
+        background: rgb(15 15 26 / 0.88);
+    }
+
+    .janela {
+        position: relative;
+        max-width: 38rem;
+        margin-inline: auto;
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        background: var(--noite);
+        border: 2px solid var(--linha);
+        border-top: 6px solid var(--azul);
+    }
+
+    .janela h2 {
+        padding-right: 3rem;
+    }
+
+    .janela > .apoio {
+        margin-top: 0.5rem;
+    }
+
+    .sponsor-modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.75rem;
+        height: 2.75rem;
+        background: none;
+        border: 2px solid var(--contorno);
+        font-size: 1.75rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .sponsor-modal-close:hover {
+        border-color: var(--giz);
+    }
+
+    .formulario {
+        display: grid;
+        gap: 1.25rem;
+        margin-top: 1.75rem;
+    }
+
+    .formulario .btn {
+        justify-self: start;
+    }
+
+    .duplo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+        .proposta {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .duplo {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
 <script>
     import { ACCESS_KEYS, SPINNER_HTML, handleWeb3Form } from '../scripts/web3forms';
 
-    // Modal "Torne-se um Patrocinador": abre pelo botão; fecha no ×, clicando fora ou com Esc.
+    // Modal da proposta: abre pelo botão; fecha no ×, clicando fora ou com Esc; devolve o foco ao botão.
     const modal = document.getElementById('sponsorModal');
+    const openButton = document.getElementById('openSponsorModalBtn');
     const isOpen = () => modal?.style.display === 'block';
     const setOpen = (open: boolean) => {
         if (!modal) return;
         modal.style.display = open ? 'block' : 'none';
         document.body.style.overflow = open ? 'hidden' : '';
+        if (open) modal.querySelector<HTMLInputElement>('input')?.focus();
+        else openButton?.focus();
     };
 
-    document.getElementById('openSponsorModalBtn')?.addEventListener('click', (event) => {
-        event.preventDefault();
-        setOpen(true);
-    });
+    openButton?.addEventListener('click', () => setOpen(true));
     document.querySelector('.sponsor-modal-close')?.addEventListener('click', () => setOpen(false));
     modal?.addEventListener('click', (event) => {
         if (event.target === modal) setOpen(false);
@@ -201,11 +314,11 @@ const shownWidth = (logo: ImageMetadata, boxW: number, boxH: number) =>
     handleWeb3Form(document.querySelector<HTMLFormElement>('#sponsorForm'), {
         accessKey: ACCESS_KEYS.patrocinio,
         subject: (data) => `Patrocínio - ${data.get('sponsor_tier')} - ${data.get('name')}`,
-        busyHTML: `${SPINNER_HTML} Enviando...`,
+        busyHTML: `${SPINNER_HTML} Enviando`,
         onSuccess: (form) => {
-            alert('🎉 Proposta de patrocínio enviada com sucesso! Entraremos em contato em breve.');
             form.reset();
-            setOpen(false);
+            const status = form.querySelector('[role="status"]');
+            if (status) status.textContent = 'Proposta enviada. A equipe responde em até 24 h.';
         },
     });
 </script>
