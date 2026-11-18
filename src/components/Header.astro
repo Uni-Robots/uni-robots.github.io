@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
+import { pageSlug } from '../lib/page';
 
 const nav = [
     { slug: 'index', label: 'Início' },
@@ -12,8 +13,7 @@ const nav = [
     { slug: 'contato', label: 'Contato' },
 ];
 
-// Funciona para "/", "/index.html", "/equipe" e "/equipe.html".
-const current = Astro.url.pathname.split('/').pop()?.replace(/\.html$/, '') || 'index';
+const current = pageSlug(Astro.url);
 ---
 
 <header class="header">

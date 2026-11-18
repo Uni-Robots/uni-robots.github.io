@@ -22,6 +22,7 @@ npm run preview   # serve o dist/ localmente
 - `src/scripts/` — JS compartilhado: envio de formulários (`web3forms.ts`) e animação de entrada dos cards (`reveal.ts`)
 - `src/content/` — **dados do site** (equipe, patrocinadores, projetos), validados no build por `src/content.config.ts`
 - `src/styles/` — CSS global (`main.css`, `responsive.css`)
+- `public/` — arquivos copiados sem alteração (`robots.txt`)
 - `src/assets/` — imagens das páginas e a fonte Inter
 - `src/icons/` — ícones SVG (Font Awesome Free 6.4.0), usados com `<Icon name="..." />`
 
@@ -60,6 +61,11 @@ Edite `src/content/projects.json`. `icon` é o nome de um arquivo de `src/icons/
 ### Imagens e ícones
 - Fotos e logos podem ser enviados em qualquer tamanho (de preferência ≥ 400px): o build gera versões WebP redimensionadas para o tamanho em que aparecem.
 - Para um ícone novo, baixe o SVG em [fontawesome.com/icons](https://fontawesome.com/search?o=r&m=free) (versão Free), salve em `src/icons/` e use `<Icon name="nome-do-arquivo" />`.
+
+### SEO e prévia de links
+- Cada página define título e descrição no `<BaseLayout title="..." description="...">` (até ~160 caracteres; é o texto que aparece no Google e na prévia do link).
+- A imagem de prévia (WhatsApp, LinkedIn etc.) é gerada a partir de `src/assets/sobre-equipe.webp`, recortada em 1200×630.
+- O sitemap (`/sitemap-index.xml`) é gerado no build; `public/robots.txt` aponta para ele.
 
 ## Site legado (`legacy/`)
 Cópia do site antigo em HTML puro, mantida só para comparação durante a migração; será removida no fim.

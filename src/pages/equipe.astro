@@ -4,9 +4,13 @@ import MemberCard from '../components/MemberCard.astro';
 import { getTeamByCategory } from '../lib/team';
 
 const groups = await getTeamByCategory();
+const total = groups.reduce((n, g) => n + g.members.length, 0);
 ---
 
-<BaseLayout title="Equipe">
+<BaseLayout
+    title="Equipe"
+    description={`Conheça os ${total} membros da UniRobot: liderança, gestores e as áreas de programação, eletrônica, montagem e marketing.`}
+>
     <main class="page-main">
     <section id="team" class="team">
         <div class="container">
