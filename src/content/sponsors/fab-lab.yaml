@@ -1,0 +1,5 @@
+name: "Fab Lab"
+alt: "Fab Lab"
+logo: ./fab-lab.png
+description: "Laboratório de fabricação digital que transforma ideias em protótipos usando criação e tecnologia."
+order: 5

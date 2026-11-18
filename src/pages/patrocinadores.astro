@@ -1,15 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-// Provisório (Fase 2): os patrocinadores viram uma coleção de dados na Fase 3.
-import logo0 from '../content/sponsors/3d-brothers.png';
-import logo1 from '../content/sponsors/artely.png';
-import logo2 from '../content/sponsors/unisenai-pr.png';
-import logo3 from '../content/sponsors/gms-uniformes.png';
-import logo4 from '../content/sponsors/fab-lab.png';
-import logo5 from '../content/sponsors/solidworks.png';
-import logo6 from '../content/sponsors/3d-touch.png';
 
-const logos = { '3d-brothers': logo0, 'artely': logo1, 'unisenai-pr': logo2, 'gms-uniformes': logo3, 'fab-lab': logo4, 'solidworks': logo5, '3d-touch': logo6 };
+const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title="Patrocinadores">
@@ -19,64 +12,26 @@ const logos = { '3d-brothers': logo0, 'artely': logo1, 'unisenai-pr': logo2, 'gm
             <h2 class="section-title">Nossos Patrocinadores</h2>
             <div class="sponsor-marquee" role="region" aria-label="Patrocinadores da UniRobot">
                 <div class="sponsor-marquee-track">
-                    <div class="sponsor-marquee-group">
-                        <div class="sponsor-marquee-item"><img src={logos['3d-brothers'].src} alt="3D Brothers" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['artely'].src} alt="Artely Complementos para Sala" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['unisenai-pr'].src} alt="UniSENAI PR" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['gms-uniformes'].src} alt="GMS Uniformes" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['fab-lab'].src} alt="Fab Lab" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['solidworks'].src} alt="SOLIDWORKS" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['3d-touch'].src} alt="3D Touch" loading="lazy"></div>
-                    </div>
-                    <div class="sponsor-marquee-group" aria-hidden="true">
-                        <div class="sponsor-marquee-item"><img src={logos['3d-brothers'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['artely'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['unisenai-pr'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['gms-uniformes'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['fab-lab'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['solidworks'].src} alt="" loading="lazy"></div>
-                        <div class="sponsor-marquee-item"><img src={logos['3d-touch'].src} alt="" loading="lazy"></div>
-                    </div>
+                    {/* O grupo é repetido para o carrossel girar sem emenda; a cópia fica oculta para leitores de tela. */}
+                    {[false, true].map((copy) => (
+                        <div class="sponsor-marquee-group" aria-hidden={copy ? 'true' : undefined}>
+                            {sponsors.map(({ data }) => (
+                                <div class="sponsor-marquee-item"><img src={data.logo.src} alt={copy ? '' : data.alt} loading="lazy"></div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
             <div class="sponsor-details">
                 <h3 class="sponsor-details-title">Conheça nossos parceiros</h3>
                 <div class="sponsor-details-grid">
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['3d-brothers'].src} alt="3D Brothers" loading="lazy"></div>
-                        <h3>3D Brothers</h3>
-                        <p>Empresa curitibana que produz filamentos nacionais e oferece soluções para a comunidade de impressão 3D.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['artely'].src} alt="Artely Complementos para Sala" loading="lazy"></div>
-                        <h3>Artely</h3>
-                        <p>Fabricante de móveis e complementos para sala, como racks, painéis, mesas e aparadores.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['unisenai-pr'].src} alt="UniSENAI PR" loading="lazy"></div>
-                        <h3>UniSENAI PR</h3>
-                        <p>Centro universitário voltado a engenharia, tecnologia, gestão e inovação, conectando ensino e indústria.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['gms-uniformes'].src} alt="GMS Uniformes" loading="lazy"></div>
-                        <h3>GMS Uniformes</h3>
-                        <p>Confecciona uniformes profissionais e acessórios personalizados com foco em qualidade e inovação.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['fab-lab'].src} alt="Fab Lab" loading="lazy"></div>
-                        <h3>Fab Lab</h3>
-                        <p>Laboratório de fabricação digital que transforma ideias em protótipos usando criação e tecnologia.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['solidworks'].src} alt="SOLIDWORKS" loading="lazy"></div>
-                        <h3>SOLIDWORKS</h3>
-                        <p>Plataforma de CAD 3D para modelar, simular e validar peças e projetos de engenharia.</p>
-                    </article>
-                    <article class="sponsor-detail-card">
-                        <div class="sponsor-detail-logo"><img src={logos['3d-touch'].src} alt="3D Touch" loading="lazy"></div>
-                        <h3>3D Touch</h3>
-                        <p>Distribuidora nacional de soluções em impressão 3D, com impressoras, materiais e suporte técnico.</p>
-                    </article>
+                    {sponsors.map(({ data }) => (
+                        <article class="sponsor-detail-card">
+                            <div class="sponsor-detail-logo"><img src={data.logo.src} alt={data.alt} loading="lazy"></div>
+                            <h3>{data.name}</h3>
+                            <p>{data.description}</p>
+                        </article>
+                    ))}
                 </div>
             </div>
             <div class="sponsor-message">

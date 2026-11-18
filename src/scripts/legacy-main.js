@@ -1,249 +1,19 @@
-// PONTE TEMPORÁRIA (Fase 2): cópia de legacy/js/main.js, só com caminhos de imagem
-// absolutos e a fonte via var(--font-inter). Dividido em módulos na Fase 5.
+// PONTE TEMPORÁRIA: restos de legacy/js/main.js (menu, modais, formulários, animações,
+// easter egg). Equipe e projetos já vêm prontos do build (Fase 3). Dividido em módulos na Fase 5.
 // ============================================
 // UniRobot — script principal
 // Cada init só roda se os elementos existirem
 // na página atual (site multi-página).
 // ============================================
-// x
-// --- Dados da equipe ---
-const teamMembers = [
-    // Liderança
-    { name: "João Souza",             role: "Capitão",               image: "/assets/images/team/joao-souza.webp" },
-    { name: "Matheus Torquato",       role: "Vice-Capitão",          image: "/assets/images/team/matheus-torquato.webp" },
-    // Gestores
-    { name: "Felipe Grabias",         role: "Gestor de Montagem",    image: "/assets/images/team/felipe-grabias.webp" },
-    { name: "Gustavo Britto Triaquim",role: "Gestor de Eletrônica",  image: "/assets/images/team/gustavo-britto.webp" },
-    { name: "João Pedro",             role: "Gestor de Eletrônica",  image: "/assets/images/team/joao-pedro.webp" },
-    // Programação
-    { name: "Adrian Netto",           role: "Membro de Programação", image: "/assets/images/team/adrian-netto.webp" },
-    { name: "Bianca Millek",          role: "Membro de Programação", image: "/assets/images/team/bianca-millek.webp" },
-    
-    // Modelo para add links de contato
-    //{ name: "Felipe Santos",          role: "Membro de Programação", image: "/assets/images/team/felipe-santos.webp", linkedin: "https://www.linkedin.com/in/oofelipesantos/", github: "https://github.com/felipe-santos-tech" },
-    
-    { name: "Felipe Santos",          role: "Membro de Programação", image: "/assets/images/team/felipe-santos.webp", linkedin: "https://www.linkedin.com/in/oofelipesantos/", github: "https://github.com/felipe-santos-tech" },
-    { name: "Lucas Guzatti",          role: "Membro de Programação", image: "/assets/images/team/lucas-guzatti.webp" },
-    { name: "Jean Pierre Franz",      role: "Membro de Programação", image: "/assets/images/team/jean-pierre.webp" },
-    // Eletrônica
-    { name: "Kauã da Silva",          role: "Membro de Eletrônica",  image: "/assets/images/team/kaua-silva.webp" },
-    { name: "Maria Eduarda Wons",     role: "Membro de Eletrônica",  image: "/assets/images/team/maria-wons.webp" },
-    // Montagem (Engenharia + Mecânica)
-    { name: "Bruno Barbato",          role: "Membro de Montagem",    image: "/assets/images/team/bruno-barbato.webp" },
-    { name: "Eduardo Riad",           role: "Membro de Montagem",    image: "/assets/images/team/eduardo-riad.webp" },
-    { name: "Kauan Fiori",            role: "Membro de Montagem",    image: "/assets/images/team/kauan-fiori.webp" },
-    { name: "Lorenzo Riboli",         role: "Membro de Montagem",    image: "/assets/images/team/lorenzo-riboli.webp" },
-    { name: "Poliane Sampaio",        role: "Membro de Montagem",    image: "/assets/images/team/Poli Sampaio - Engenharia.webp" },
-    { name: "Caio André",             role: "Membro de Montagem",    image: "/assets/images/team/caio-andre.webp" },
-    { name: "Maria Vitória",          role: "Membro de Montagem",    image: "/assets/images/team/maria-vitoria.webp" },
-    { name: "Marina Cardoso",         role: "Membro de Montagem",    image: "/assets/images/team/marina-cardoso.webp" },
-    { name: "Pamela da Silva Machado",role: "Membro de Montagem",    image: "/assets/images/team/pamela-machado.webp" },
-    // Marketing
-    { name: "Jhiury",                 role: "Membro de Marketing",   image: "/assets/images/team/jhiury.webp" },
-    { name: "Mariana",                role: "Membro de Marketing",   image: "/assets/images/team/mariana.webp" },
-    { name: "Maycon Tateiwa",         role: "Membro de Marketing",   image: "/assets/images/team/maycon-tateiwa.webp" },
-    { name: "Yuri Powrosnek",                   role: "Membro de Marketing",   image: "/assets/images/team/yuri.webp" }
-];
-
-// Categorias (Montagem reúne Engenharia + Mecânica)
-const teamCategories = [
-    { id: 'lideranca',   label: '👑 Liderança',    test: r => r === 'Capitão' || r === 'Vice-Capitão' },
-    { id: 'gestores',    label: '📊 Gestores',     test: r => r.includes('Gestor') },
-    { id: 'programacao', label: '👨‍💻 Programação', test: r => r === 'Membro de Programação' },
-    { id: 'eletronica',  label: '🔌 Eletrônica',   test: r => r === 'Membro de Eletrônica' },
-    { id: 'montagem',    label: '🛠️ Montagem',     test: r => ['Membro de Montagem','Membro de Engenharia','Membro de Mecânica'].includes(r) },
-    { id: 'marketing',   label: '📢 Marketing',    test: r => r === 'Membro de Marketing' }
-];
-
-// --- Dados dos projetos ---
-const projects = [
-    { title: "Pimpolho",             description: "Seguidor de Linha",     icon: "fas fa-shoe-prints" },
-    { title: "Hockey League",        description: "Hockey Micro",          icon: "fas fa-hockey-puck" },
-    { title: "Tribagual",            description: "Sumô Mini 500g (Auto)", icon: "fas fa-dumbbell" },
-    { title: "Taz",                  description: "Sumô Lego 1kg (Auto)",  icon: "fas fa-cubes" },
-    { title: "Uninho",               description: "Sumô Lego 1kg (Auto)",  icon: "fas fa-cubes" },
-    { title: "Perry o Ornintorrinco",description: "Artbot",                icon: "fas fa-paintbrush" }
-];
-
-// Avatar local de fallback (SVG inline — não depende de internet)
-function fallbackAvatar(initial) {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#00a8ff"/><stop offset="1" stop-color="#9c88ff"/>
-        </linearGradient></defs>
-        <rect width="300" height="300" fill="url(#g)"/>
-        <text x="150" y="150" font-family="Arial" font-size="130" font-weight="bold"
-              fill="#fff" text-anchor="middle" dominant-baseline="central">${initial}</text>
-    </svg>`;
-    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-}
-
-// ============================================
-// EQUIPE (página equipe.html)
-// ============================================
-function createMemberCard(member) {
-    const card = document.createElement('div');
-    card.className = 'team-member';
-
-    const img = document.createElement('img');
-    img.src = member.image;
-    img.alt = member.name;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-
-    img.addEventListener('error', () => {
-        img.src = fallbackAvatar(member.name.charAt(0));
-    }, { once: true });
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'member-image';
-    imgWrap.appendChild(img);
-
-    const content = document.createElement('div');
-    content.className = 'member-content';
-
-    const memberName = document.createElement('h3');
-    memberName.textContent = member.name;
-
-    const memberRole = document.createElement('p');
-    memberRole.textContent = member.role;
-
-    const social = document.createElement('div');
-    social.className = 'member-social';
-
-    // LinkedIn
-    if (member.linkedin) {
-        const linkedin = document.createElement('a');
-
-        linkedin.href = member.linkedin;
-        linkedin.target = '_blank';
-        linkedin.rel = 'noopener noreferrer';
-        linkedin.setAttribute(
-            'aria-label',
-            `LinkedIn de ${member.name}`
-        );
-
-        linkedin.innerHTML = '<i class="fab fa-linkedin"></i>';
-
-        social.appendChild(linkedin);
-    }
-
-    // GitHub
-    if (member.github) {
-        const github = document.createElement('a');
-
-        github.href = member.github;
-        github.target = '_blank';
-        github.rel = 'noopener noreferrer';
-        github.setAttribute(
-            'aria-label',
-            `GitHub de ${member.name}`
-        );
-
-        github.innerHTML = '<i class="fab fa-github"></i>';
-
-        social.appendChild(github);
-    }
-
-    content.appendChild(memberName);
-    content.appendChild(memberRole);
-
-    // Só mostra a área social se houver algum link
-    if (social.children.length > 0) {
-        content.appendChild(social);
-    }
-
-    card.appendChild(imgWrap);
-    card.appendChild(content);
-
-    return card;
-}
-
-function renderTeamMembers() {
-    const container = document.getElementById('team-sections');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    teamCategories.forEach(cat => {
-        const members = teamMembers.filter(m => cat.test(m.role));
-        if (!members.length) return;
-
-        const section = document.createElement('div');
-        section.className = 'team-category';
-        section.id = 'cat-' + cat.id;
-
-        const header = document.createElement('div');
-        header.className = 'category-header';
-        header.innerHTML = `<h3></h3><span class="member-count"></span>`;
-        header.querySelector('h3').textContent = cat.label;
-        header.querySelector('.member-count').textContent =
-            `${members.length} membro${members.length > 1 ? 's' : ''}`;
-        section.appendChild(header);
-
-        const grid = document.createElement('div');
-        grid.className = 'members-grid';
-        members.forEach(m => grid.appendChild(createMemberCard(m)));
-        section.appendChild(grid);
-
-        container.appendChild(section);
-    });
-}
-
-function createCategoryNavigation() {
-    const nav = document.getElementById('categoryNav');
-    if (!nav) return;
-
-    nav.innerHTML = '';
-    const present = teamCategories.filter(c => teamMembers.some(m => c.test(m.role)));
-
-    present.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = 'category-nav-btn';
-        btn.textContent = cat.label;
-        btn.dataset.target = 'cat-' + cat.id;
-        btn.addEventListener('click', () => {
-            const el = document.getElementById('cat-' + cat.id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        nav.appendChild(btn);
-    });
-
-    const first = nav.querySelector('.category-nav-btn');
-    if (first) first.classList.add('active');
-
-    const sections = present.map(c => document.getElementById('cat-' + c.id)).filter(Boolean);
-    if ('IntersectionObserver' in window && sections.length) {
-        const spy = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    document.querySelectorAll('.category-nav-btn').forEach(b =>
-                        b.classList.toggle('active', b.dataset.target === e.target.id));
-                }
-            });
-        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-        sections.forEach(s => spy.observe(s));
-    }
-}
-
 // ============================================
 // PROJETOS (página projetos.html) + Easter Egg
 // ============================================
-function renderProjects() {
-    const grid = document.getElementById('projects-grid');
-    if (!grid) return;
-
-    grid.innerHTML = '';
-    projects.forEach(project => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.innerHTML = `
-            <div class="project-icon"><i class="${project.icon}"></i></div>
-            <h3></h3><p></p>`;
-        card.querySelector('h3').textContent = project.title;
-        card.querySelector('p').textContent = project.description;
-        grid.appendChild(card);
-        checkAndActivateSumoEasterEgg(card, project.title, project.description);
+// Os cards vêm prontos do build (src/content/projects.json); aqui só liga o easter egg.
+function initSumoEasterEggs() {
+    document.querySelectorAll('.project-card[data-easter-egg]').forEach(card => {
+        const title = card.querySelector('h3')?.textContent ?? '';
+        const description = card.querySelector('p')?.textContent ?? '';
+        checkAndActivateSumoEasterEgg(card, title, description);
     });
 }
 
@@ -534,9 +304,7 @@ function initNewsletterForm() {
 // Inicialização
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    renderProjects();
-    renderTeamMembers();
-    createCategoryNavigation();
+    initSumoEasterEggs();
 
     initMobileMenu();
     initSmoothScroll();

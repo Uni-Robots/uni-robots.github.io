@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MemberCard from '../components/MemberCard.astro';
+import { getTeamByCategory } from '../lib/team';
+
+const groups = await getTeamByCategory();
 ---
 
 <BaseLayout title="Equipe">
@@ -8,9 +12,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="container">
             <h2 class="section-title">Nossa Equipe</h2>
 
-            {/* Navegação por categorias desativada no site atual: <div class="category-nav" id="categoryNav"></div> */}
-
-            <div id="team-sections" class="team-sections"></div>
+            <div id="team-sections" class="team-sections">
+                {groups.map(({ id, label, members }) => (
+                    <div class="team-category" id={`cat-${id}`}>
+                        <div class="category-header"><h3>{label}</h3><span class="member-count">{members.length} membro{members.length > 1 ? 's' : ''}</span></div>
+                        <div class="members-grid">
+                            {members.map((member) => <MemberCard member={member} />)}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     </section>
     </main>

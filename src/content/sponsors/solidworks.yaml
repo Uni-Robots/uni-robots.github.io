@@ -1,0 +1,5 @@
+name: "SOLIDWORKS"
+alt: "SOLIDWORKS"
+logo: ./solidworks.png
+description: "Plataforma de CAD 3D para modelar, simular e validar peças e projetos de engenharia."
+order: 6

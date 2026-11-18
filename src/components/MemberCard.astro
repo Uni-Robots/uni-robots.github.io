@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    member: CollectionEntry<'team'>;
+}
+
+const { name, role, photo, linkedin, github } = Astro.props.member.data;
+---
+
+<div class="team-member">
+    <div class="member-image">
+        <img src={photo.src} alt={name} loading="lazy" decoding="async">
+    </div>
+    <div class="member-content">
+        <h3>{name}</h3>
+        <p>{role}</p>
+        {(linkedin || github) && (
+            <div class="member-social">
+                {linkedin && (
+                    <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn de ${name}`}><i class="fab fa-linkedin"></i></a>
+                )}
+                {github && (
+                    <a href={github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub de ${name}`}><i class="fab fa-github"></i></a>
+                )}
+            </div>
+        )}
+    </div>
+</div>

@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import sobreEquipe from '../assets/sobre-equipe.webp';
+import { getCollection } from 'astro:content';
+
+const totalMembros = (await getCollection('team')).length;
 ---
 
 <BaseLayout title="Sobre">
@@ -18,7 +21,7 @@ import sobreEquipe from '../assets/sobre-equipe.webp';
                             <p>Competições</p>
                         </div>
                         <div class="stat">
-                            <h3>24</h3>
+                            <h3>{totalMembros}</h3>
                             <p>Membros</p>
                         </div>
                         <div class="stat">

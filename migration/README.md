@@ -41,7 +41,8 @@ Partes que existem só para o site Astro ficar idêntico ao antigo enquanto a mi
 
 | O quê | Por quê | Sai na |
 |---|---|---|
-| `src/scripts/legacy-main.js` | JS antigo inteiro (renderiza equipe/projetos, modais, formulários, easter egg) | Fase 3 (dados) e Fase 5 (scripts) |
-| `public/assets/images/team/`, `public/assets/images/resenha.webp` | O `legacy-main.js` busca essas imagens por URL em runtime | Fase 3 (fotos) e Fase 5 (resenha) |
-| Imports de logo em `src/pages/patrocinadores.astro` | Patrocinadores ainda escritos à mão | Fase 3 |
+| `src/scripts/legacy-main.js` | Restos do JS antigo: menu, modais, formulários, animações de entrada, easter egg | Fase 5 |
+| `public/assets/images/resenha.webp` | O easter egg busca a imagem por URL em runtime | Fase 5 |
 | Font Awesome via CDN em `BaseLayout.astro` | Ícones | Fase 4 |
+
+Já removidas: renderização da equipe/projetos via JS e fotos em `public/assets/images/team/` (Fase 3).
