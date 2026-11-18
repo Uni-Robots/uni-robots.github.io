@@ -54,3 +54,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </section>
     </main>
 </BaseLayout>
+
+<script>
+    import { ACCESS_KEYS, handleWeb3Form } from '../scripts/web3forms';
+
+    handleWeb3Form(document.querySelector<HTMLFormElement>('#contactForm'), {
+        accessKey: ACCESS_KEYS.contato, // o assunto vem do próprio campo "subject" do formulário
+        busyHTML: 'Enviando...',
+        onSuccess: (form) => {
+            alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            form.reset();
+        },
+    });
+</script>

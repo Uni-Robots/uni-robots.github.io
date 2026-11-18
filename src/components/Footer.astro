@@ -43,3 +43,20 @@ import logo from '../assets/logo.png';
         </div>
     </div>
 </footer>
+
+<script>
+    import { ACCESS_KEYS, SPINNER_HTML, handleWeb3Form } from '../scripts/web3forms';
+
+    handleWeb3Form(document.querySelector<HTMLFormElement>('#newsletterForm'), {
+        accessKey: ACCESS_KEYS.contato,
+        subject: () => 'Newsletter - Novo inscrito',
+        busyHTML: SPINNER_HTML,
+        onSuccess: (form) => {
+            const input = form.querySelector('input');
+            if (!input) return;
+            input.value = '';
+            input.placeholder = '✅ Inscrito com sucesso!';
+            setTimeout(() => (input.placeholder = 'Seu e-mail'), 3000);
+        },
+    });
+</script>

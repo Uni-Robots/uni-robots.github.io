@@ -1412,3 +1412,23 @@ body {
 @keyframes icon-spin {
     to { transform: rotate(360deg); }
 }
+
+/* Animação de entrada dos cards (src/scripts/reveal.ts).
+   `js-reveal` é posta no <html> antes da primeira pintura (BaseLayout), então os cards já
+   começam escondidos; `revealing` só existe durante a entrada, para não sobrescrever a
+   transição de hover dos cards. */
+.js-reveal :is(.project-card, .team-member, .social-card):not(.revealed) {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.js-reveal :is(.project-card, .team-member, .social-card).revealing {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal :is(.project-card, .team-member, .social-card):not(.revealed) {
+        opacity: 1;
+        transform: none;
+    }
+}

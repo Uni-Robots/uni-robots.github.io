@@ -33,3 +33,18 @@ const current = Astro.url.pathname.split('/').pop()?.replace(/\.html$/, '') || '
         </div>
     </nav>
 </header>
+
+<script>
+    // Menu hambúrguer (mobile): abre/fecha e trava a rolagem da página enquanto aberto.
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    const setOpen = (open: boolean) => {
+        hamburger?.classList.toggle('active', open);
+        navMenu?.classList.toggle('active', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    hamburger?.addEventListener('click', () => setOpen(!navMenu?.classList.contains('active')));
+    document.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+</script>

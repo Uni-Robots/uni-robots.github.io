@@ -18,7 +18,7 @@ Requerem Playwright instalado globalmente (`npm i -g playwright`, `npx playwrigh
 |---|---|
 | `measure.cjs <url> <pasta>` | Pesos/requisições + screenshots das 7 páginas |
 | `compare.cjs [pastaA] [pastaB]` | Diferença pixel a pixel entre screenshots (padrão: `baseline` × `current`); salva `diff/*.png` do que passar do limite (`LIMIT=0.5` %, ajustável por variável de ambiente) |
-| `functional.cjs [url]` | Teste funcional: link ativo, títulos, 25 cards da equipe, 6 projetos, easter egg, modal e formulários (Web3Forms interceptado, nenhum e-mail real sai) |
+| `functional.cjs [url]` | Teste funcional (20 checagens): link ativo, títulos, 25 cards da equipe, animação de entrada e hover, 6 projetos, easter egg, modal e formulários (Web3Forms interceptado, nenhum e-mail real sai). No site antigo, a checagem de hover falha de propósito: o JS antigo anulava o efeito |
 | `lighthouse.sh <url> <pasta> [páginas]` | Lighthouse mobile, 3 execuções, guarda a mediana |
 
 ```bash
@@ -37,11 +37,4 @@ node migration/measure.cjs http://127.0.0.1:8731 migration/baseline
 
 ## Pontes temporárias
 
-Partes que existem só para o site Astro ficar idêntico ao antigo enquanto a migração não termina:
-
-| O quê | Por quê | Sai na |
-|---|---|---|
-| `src/scripts/legacy-main.js` | Restos do JS antigo: menu, modais, formulários, animações de entrada, easter egg | Fase 5 |
-| `public/assets/images/resenha.webp` | O easter egg busca a imagem por URL em runtime | Fase 5 |
-
-Já removidas: renderização da equipe/projetos via JS e fotos em `public/assets/images/team/` (Fase 3); Font Awesome via CDN (Fase 4).
+Nenhuma. Todas foram removidas: renderização da equipe/projetos via JS e fotos em `public/` (Fase 3), Font Awesome via CDN (Fase 4), `legacy-main.js` e `public/assets/images/resenha.webp` (Fase 5).

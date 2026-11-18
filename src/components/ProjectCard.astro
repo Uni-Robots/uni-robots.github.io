@@ -9,8 +9,10 @@ interface Props {
 const { title, description, icon, easterEgg } = Astro.props.project.data;
 ---
 
-<div class="project-card" data-easter-egg={easterEgg ? '' : undefined}>
+{/* Cards com easterEgg abrem o "Protocolo Resenha" (ResenhaEasterEgg.astro). */}
+<div class:list={['project-card', { 'sumo-project': easterEgg }]} data-easter-egg={easterEgg ? '' : undefined}>
     <div class="project-icon"><Icon name={icon} /></div>
     <h3>{title}</h3>
     <p>{description}</p>
+    {easterEgg && <div class="sumo-tooltip">🥋 Clique para ativar PROTOCOLO RESENHA 🥋</div>}
 </div>

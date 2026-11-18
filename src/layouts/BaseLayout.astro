@@ -28,6 +28,16 @@ const favicon = await getImage({ src: logo, width: 96, format: 'png' });
         <meta name="description" content={description}>
         <link rel="icon" type="image/png" href={favicon.src}>
         <Font cssVariable="--font-inter" preload />
+        <script is:inline>
+            // Esconde os cards antes da primeira pintura para a animação de entrada (src/scripts/reveal.ts).
+            // Se o módulo não carregar em 3s, mostra tudo para o conteúdo nunca ficar invisível.
+            if ('IntersectionObserver' in window) {
+                document.documentElement.classList.add('js-reveal');
+                setTimeout(function () {
+                    if (!window.__revealReady) document.documentElement.classList.remove('js-reveal');
+                }, 3000);
+            }
+        </script>
         <!-- Ícones: Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com - CC BY 4.0 -->
     </head>
     <body>
@@ -36,8 +46,7 @@ const favicon = await getImage({ src: logo, width: 96, format: 'png' });
         <Footer />
 
         <script>
-            // Ponte temporária: JS do site antigo, dividido em módulos na Fase 5.
-            import '../scripts/legacy-main.js';
+            import '../scripts/reveal';
         </script>
     </body>
 </html>

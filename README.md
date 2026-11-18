@@ -18,12 +18,12 @@ npm run preview   # serve o dist/ localmente
 ## Estrutura (Astro)
 - `src/pages/` — uma página `.astro` por URL (`equipe.astro` → `equipe.html`)
 - `src/layouts/BaseLayout.astro` — `<head>`, header e footer comuns a todas as páginas
-- `src/components/` — header, footer e cards (membro, projeto)
+- `src/components/` — header, footer, cards (membro, projeto), ícone e o easter egg; cada componente traz o próprio `<script>` quando precisa de JS
+- `src/scripts/` — JS compartilhado: envio de formulários (`web3forms.ts`) e animação de entrada dos cards (`reveal.ts`)
 - `src/content/` — **dados do site** (equipe, patrocinadores, projetos), validados no build por `src/content.config.ts`
 - `src/styles/` — CSS global (`main.css`, `responsive.css`)
 - `src/assets/` — imagens das páginas e a fonte Inter
 - `src/icons/` — ícones SVG (Font Awesome Free 6.4.0), usados com `<Icon name="..." />`
-- `public/` — arquivos copiados sem alteração (favicon)
 
 ## Como editar o conteúdo
 

@@ -37,6 +37,17 @@ const check = (name, ok, extra = '') => {
   const broken = await page.evaluate(async () => { const imgs = [...document.querySelectorAll('.team-member img')]; imgs.forEach(i => { i.loading = 'eager'; }); await Promise.all(imgs.map(i => i.decode().catch(() => {}))); return imgs.filter(i => !i.naturalWidth || i.src.startsWith('data:')).map(i => i.alt); });
   check('equipe: 25 cards com foto', members === 25 && broken.length === 0, `${members} cards, sem foto: ${broken.join(', ') || 'nenhum'}`);
 
+  // Animação de entrada: depois de rolar, todos os cards visíveis; e o hover levanta o card.
+  await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } });
+  await page.waitForTimeout(900);
+  const hidden = await page.$$eval('.team-member', els => els.filter(e => getComputedStyle(e).opacity !== '1').length);
+  check('equipe: cards aparecem ao rolar', hidden === 0, `${hidden} ainda invisíveis`);
+  const card = page.locator('.team-member').last();
+  await card.hover();
+  await page.waitForTimeout(500);
+  const lift = await card.evaluate(e => new DOMMatrix(getComputedStyle(e).transform).m42);
+  check('equipe: hover levanta o card', lift < -5, `translateY=${lift.toFixed(1)}px (no site antigo o JS anulava o hover)`);
+
   await page.goto(`${BASE}/projetos.html`, { waitUntil: 'load' });
   check('projetos: 6 cards', (await page.locator('.project-card').count()) === 6);
   await page.locator('.sumo-project').first().click();
@@ -46,7 +57,7 @@ const check = (name, ok, extra = '') => {
   const rw = await resenha.evaluate(i => i.decode().then(() => i.naturalWidth).catch(() => 0));
   check('easter egg: Protocolo Resenha abre com imagem', rw > 0, `naturalWidth=${rw}`);
   await page.locator('#protocoloResenhaModal').click();
-  check('easter egg: fecha ao clicar', (await page.locator('#protocoloResenhaModal').count()) === 0);
+  check('easter egg: fecha ao clicar', !(await page.locator('#protocoloResenhaModal').isVisible()));
 
   await page.goto(`${BASE}/patrocinadores.html`, { waitUntil: 'load' });
   const modal = page.locator('#sponsorModal');

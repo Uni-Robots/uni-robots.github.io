@@ -170,3 +170,39 @@ const shownWidth = (logo: ImageMetadata, boxW: number, boxH: number) =>
         </div>
     </div>
 </BaseLayout>
+
+<script>
+    import { ACCESS_KEYS, SPINNER_HTML, handleWeb3Form } from '../scripts/web3forms';
+
+    // Modal "Torne-se um Patrocinador": abre pelo botão; fecha no ×, clicando fora ou com Esc.
+    const modal = document.getElementById('sponsorModal');
+    const isOpen = () => modal?.style.display === 'block';
+    const setOpen = (open: boolean) => {
+        if (!modal) return;
+        modal.style.display = open ? 'block' : 'none';
+        document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    document.getElementById('openSponsorModalBtn')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        setOpen(true);
+    });
+    document.querySelector('.sponsor-modal-close')?.addEventListener('click', () => setOpen(false));
+    modal?.addEventListener('click', (event) => {
+        if (event.target === modal) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isOpen()) setOpen(false);
+    });
+
+    handleWeb3Form(document.querySelector<HTMLFormElement>('#sponsorForm'), {
+        accessKey: ACCESS_KEYS.patrocinio,
+        subject: (data) => `Patrocínio - ${data.get('sponsor_tier')} - ${data.get('name')}`,
+        busyHTML: `${SPINNER_HTML} Enviando...`,
+        onSuccess: (form) => {
+            alert('🎉 Proposta de patrocínio enviada com sucesso! Entraremos em contato em breve.');
+            form.reset();
+            setOpen(false);
+        },
+    });
+</script>

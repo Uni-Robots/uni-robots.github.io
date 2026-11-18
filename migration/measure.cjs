@@ -41,7 +41,10 @@ async function scrollThrough(page) {
     });
     await page.waitForLoadState('networkidle').catch(() => {});
     // Imagens com decoding="async" podem sair em branco no screenshot sem isso.
-    await page.evaluate(() => Promise.all([...document.images].map(img => img.decode().catch(() => {}))));
+    // Só imagens renderizadas: uma lazy dentro de modal oculto nunca carrega e o decode() não resolve.
+    await page.evaluate(() => Promise.all([...document.images]
+        .filter(img => img.getClientRects().length > 0)
+        .map(img => img.decode().catch(() => {}))));
     await page.waitForTimeout(1000); // transição de 0.6s dos cards
 }
 
