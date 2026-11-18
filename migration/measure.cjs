@@ -81,6 +81,16 @@ async function measure(browser, name, vpName) {
         animations: 'disabled', // congela o carrossel de patrocinadores no estado inicial
     });
 
+    // O modal de patrocínio fica fechado no screenshot da página; captura ele aberto à parte.
+    if (name === 'patrocinadores') {
+        await page.click('#openSponsorModalBtn');
+        await page.waitForTimeout(800);
+        await page.locator('.sponsor-modal-content').screenshot({
+            path: path.join(shotDir, `patrocinadores-modal-${vpName}.jpg`),
+            type: 'jpeg', quality: 70, animations: 'disabled',
+        });
+    }
+
     await Promise.all(pending);
     await context.close();
     return { page: name, viewport: vpName, ...totals, external: [...external].sort() };

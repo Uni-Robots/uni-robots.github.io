@@ -1,5 +1,9 @@
 // PONTE TEMPORÁRIA: restos de legacy/js/main.js (menu, modais, formulários, animações,
 // easter egg). Equipe e projetos já vêm prontos do build (Fase 3). Dividido em módulos na Fase 5.
+import spinnerSvg from '../icons/spinner.svg?raw';
+
+const SPINNER = `<i class="icon icon-spin" aria-hidden="true">${spinnerSvg}</i>`;
+
 // ============================================
 // UniRobot — script principal
 // Cada init só roda se os elementos existirem
@@ -213,7 +217,7 @@ function initSponsorFormModal() {
         formData.append("subject", `Patrocínio - ${formData.get('sponsor_tier')} - ${formData.get('name')}`);
 
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.innerHTML = `${SPINNER} Enviando...`;
         submitBtn.disabled = true;
         try {
             const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
@@ -278,7 +282,7 @@ function initNewsletterForm() {
         formData.append("subject", "Newsletter - Novo inscrito");
 
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.innerHTML = SPINNER;
         submitBtn.disabled = true;
         try {
             const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });

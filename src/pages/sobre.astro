@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import sobreEquipe from '../assets/sobre-equipe.webp';
 import { getCollection } from 'astro:content';
@@ -31,7 +32,7 @@ const totalMembros = (await getCollection('team')).length;
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src={sobreEquipe.src} alt="Equipe UniRobot" loading="lazy">
+                    <Image src={sobreEquipe} alt="Equipe UniRobot" width={800} widths={[400, 800, 1200]} sizes="(max-width: 1024px) 92vw, 556px" />
                 </div>
             </div>
         </div>

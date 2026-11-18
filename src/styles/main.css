@@ -251,6 +251,7 @@ body {
 
 .about-image img {
     width: 100%;
+    height: auto;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
@@ -961,12 +962,14 @@ body {
     margin-bottom: 20px;
 }
 
+/* Ícone com gradiente: background-clip: text só funciona com glifo de fonte,
+   então o SVG vira máscara sobre o gradiente. */
 .sponsor-icon-animation i:first-child {
     font-size: 60px;
     background: linear-gradient(135deg, #00a8ff, #9c88ff);
-    -webkit-background-clip: text;
-    background-clip: text;
     color: transparent;
+    -webkit-mask: url('../icons/handshake.svg') center / contain no-repeat;
+    mask: url('../icons/handshake.svg') center / contain no-repeat;
     animation: bounce 2s ease infinite;
 }
 
@@ -1384,4 +1387,28 @@ body {
     .member-image {
         max-width: 150px;
     }
+}
+
+/* Ícones SVG inline (src/components/Icon.astro): mesmas métricas da fonte do Font Awesome */
+.icon {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    vertical-align: -0.125em; /* o glifo da fonte descia 0.125em abaixo da linha de base */
+}
+
+.icon svg {
+    display: block;
+    height: 1em;
+    width: auto;
+    overflow: visible;
+    fill: currentColor;
+}
+
+.icon-spin svg {
+    animation: icon-spin 2s linear infinite;
+}
+
+@keyframes icon-spin {
+    to { transform: rotate(360deg); }
 }

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -10,7 +12,8 @@ const { name, role, photo, linkedin, github } = Astro.props.member.data;
 
 <div class="team-member">
     <div class="member-image">
-        <img src={photo.src} alt={name} loading="lazy" decoding="async">
+        {/* Exibida a no máximo 184px (2x = 384px para telas de alta densidade) */}
+        <Image src={photo} alt={name} width={192} widths={[192, 384]} sizes="184px" />
     </div>
     <div class="member-content">
         <h3>{name}</h3>
@@ -18,10 +21,10 @@ const { name, role, photo, linkedin, github } = Astro.props.member.data;
         {(linkedin || github) && (
             <div class="member-social">
                 {linkedin && (
-                    <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn de ${name}`}><i class="fab fa-linkedin"></i></a>
+                    <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn de ${name}`}><Icon name="linkedin" /></a>
                 )}
                 {github && (
-                    <a href={github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub de ${name}`}><i class="fab fa-github"></i></a>
+                    <a href={github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub de ${name}`}><Icon name="github" /></a>
                 )}
             </div>
         )}

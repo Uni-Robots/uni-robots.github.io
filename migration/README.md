@@ -5,7 +5,7 @@ Ferramentas e linha de base da migração para Astro. **Esta pasta (e `legacy/`)
 ## Linha de base (site antigo, 2026-11-18)
 
 - `baseline/weights.md` / `weights.json` — requisições e peso por página (7 páginas × desktop/mobile), servindo `legacy/` localmente, com a página rolada até o fim.
-- `baseline/screens/` — screenshots full-page de cada página (animações congeladas), para comparar com o Astro.
+- `baseline/screens/` — screenshots full-page de cada página (animações congeladas) e do modal de patrocínio aberto, para comparar com o Astro.
 - `baseline/lighthouse/summary.md` — Lighthouse mobile no site no ar (mediana de 3 execuções); JSONs completos ao lado.
 
 `current/` (ignorada pelo git) guarda as medições de trabalho do site Astro.
@@ -43,6 +43,5 @@ Partes que existem só para o site Astro ficar idêntico ao antigo enquanto a mi
 |---|---|---|
 | `src/scripts/legacy-main.js` | Restos do JS antigo: menu, modais, formulários, animações de entrada, easter egg | Fase 5 |
 | `public/assets/images/resenha.webp` | O easter egg busca a imagem por URL em runtime | Fase 5 |
-| Font Awesome via CDN em `BaseLayout.astro` | Ícones | Fase 4 |
 
-Já removidas: renderização da equipe/projetos via JS e fotos em `public/assets/images/team/` (Fase 3).
+Já removidas: renderização da equipe/projetos via JS e fotos em `public/assets/images/team/` (Fase 3); Font Awesome via CDN (Fase 4).

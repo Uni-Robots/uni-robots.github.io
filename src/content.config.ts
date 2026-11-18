@@ -35,7 +35,7 @@ const projects = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        icon: z.string(), // classe do Font Awesome (vira nome de ícone SVG na Fase 4)
+        icon: z.string(), // nome de um arquivo em src/icons/ (sem .svg)
         order: z.number(),
         easterEgg: z.boolean().default(false), // ativa o "Protocolo Resenha" ao clicar
     }),

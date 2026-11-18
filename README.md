@@ -22,6 +22,7 @@ npm run preview   # serve o dist/ localmente
 - `src/content/` — **dados do site** (equipe, patrocinadores, projetos), validados no build por `src/content.config.ts`
 - `src/styles/` — CSS global (`main.css`, `responsive.css`)
 - `src/assets/` — imagens das páginas e a fonte Inter
+- `src/icons/` — ícones SVG (Font Awesome Free 6.4.0), usados com `<Icon name="..." />`
 - `public/` — arquivos copiados sem alteração (favicon)
 
 ## Como editar o conteúdo
@@ -54,7 +55,11 @@ order: 8
 Ele aparece no carrossel e nos cards automaticamente.
 
 ### Projetos
-Edite `src/content/projects.json`. `easterEgg: true` liga o "Protocolo Resenha" ao clicar no card.
+Edite `src/content/projects.json`. `icon` é o nome de um arquivo de `src/icons/` (sem `.svg`); `easterEgg: true` liga o "Protocolo Resenha" ao clicar no card.
+
+### Imagens e ícones
+- Fotos e logos podem ser enviados em qualquer tamanho (de preferência ≥ 400px): o build gera versões WebP redimensionadas para o tamanho em que aparecem.
+- Para um ícone novo, baixe o SVG em [fontawesome.com/icons](https://fontawesome.com/search?o=r&m=free) (versão Free), salve em `src/icons/` e use `<Icon name="nome-do-arquivo" />`.
 
 ## Site legado (`legacy/`)
 Cópia do site antigo em HTML puro, mantida só para comparação durante a migração; será removida no fim.

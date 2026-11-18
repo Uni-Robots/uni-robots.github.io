@@ -1,8 +1,15 @@
 ---
+import { Image } from 'astro:assets';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+
+// Os logos ficam numa caixa com object-fit: contain; a largura exibida depende da proporção de cada
+// logo (logo alto é limitado pela altura). Caixas: carrossel até 150x86, cards até 260x73.
+const shownWidth = (logo: ImageMetadata, boxW: number, boxH: number) =>
+    Math.round(Math.min(boxW, (boxH * logo.width) / logo.height));
 ---
 
 <BaseLayout title="Patrocinadores">
@@ -16,7 +23,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                     {[false, true].map((copy) => (
                         <div class="sponsor-marquee-group" aria-hidden={copy ? 'true' : undefined}>
                             {sponsors.map(({ data }) => (
-                                <div class="sponsor-marquee-item"><img src={data.logo.src} alt={copy ? '' : data.alt} loading="lazy"></div>
+                                <div class="sponsor-marquee-item"><Image src={data.logo} alt={copy ? '' : data.alt} width={shownWidth(data.logo, 150, 86)} densities={[1, 2]} /></div>
                             ))}
                         </div>
                     ))}
@@ -27,7 +34,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                 <div class="sponsor-details-grid">
                     {sponsors.map(({ data }) => (
                         <article class="sponsor-detail-card">
-                            <div class="sponsor-detail-logo"><img src={data.logo.src} alt={data.alt} loading="lazy"></div>
+                            <div class="sponsor-detail-logo"><Image src={data.logo} alt={data.alt} width={shownWidth(data.logo, 260, 73)} densities={[1, 2]} /></div>
                             <h3>{data.name}</h3>
                             <p>{data.description}</p>
                         </article>
@@ -49,36 +56,36 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
 
             <div class="sponsor-modal-header">
                 <div class="sponsor-icon-animation">
-                    <i class="fas fa-handshake"></i>
-                    <i class="fas fa-star sponsor-star-1"></i>
-                    <i class="fas fa-star sponsor-star-2"></i>
-                    <i class="fas fa-star sponsor-star-3"></i>
+                    <Icon name="handshake" />
+                    <Icon name="star" class="sponsor-star-1" />
+                    <Icon name="star" class="sponsor-star-2" />
+                    <Icon name="star" class="sponsor-star-3" />
                 </div>
                 <h2>✨ Seja um Patrocinador ✨</h2>
                 <p>Faça parte da nossa jornada e ajude a construir o futuro da robótica!</p>
                 <div class="sponsor-badge">
-                    <i class="fas fa-trophy"></i>
+                    <Icon name="trophy" />
                     <span>Parceiro Oficial</span>
                 </div>
             </div>
 
             <div class="sponsor-benefits">
-                <h3><i class="fas fa-gift"></i> Benefícios exclusivos</h3>
+                <h3><Icon name="gift" /> Benefícios exclusivos</h3>
                 <div class="benefits-grid">
                     <div class="benefit-item">
-                        <i class="fas fa-chalkboard-user"></i>
+                        <Icon name="chalkboard-user" />
                         <span>Logo no site e materiais</span>
                     </div>
                     <div class="benefit-item">
-                        <i class="fas fa-certificate"></i>
+                        <Icon name="certificate" />
                         <span>Certificado de parceria</span>
                     </div>
                     <div class="benefit-item">
-                        <i class="fas fa-users"></i>
+                        <Icon name="users" />
                         <span>Menção nas redes sociais</span>
                     </div>
                     <div class="benefit-item">
-                        <i class="fas fa-video"></i>
+                        <Icon name="video" />
                         <span>Destaque em vídeos</span>
                     </div>
                 </div>
@@ -89,7 +96,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                     <div class="form-group">
                         <input type="text" id="sponsor_name" name="name" required>
                         <label for="sponsor_name">
-                            <i class="fas fa-building"></i>
+                            <Icon name="building" />
                             Nome da Empresa / Pessoa
                         </label>
                     </div>
@@ -99,14 +106,14 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                     <div class="form-group">
                         <input type="email" id="sponsor_email" name="email" required>
                         <label for="sponsor_email">
-                            <i class="fas fa-envelope"></i>
+                            <Icon name="envelope" />
                             E-mail para contato
                         </label>
                     </div>
                     <div class="form-group">
                         <input type="tel" id="sponsor_phone" name="phone">
                         <label for="sponsor_phone">
-                            <i class="fas fa-phone"></i>
+                            <Icon name="phone" />
                             Telefone (opcional)
                         </label>
                     </div>
@@ -123,7 +130,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                             <option value="Outro">🤝 Quero conversar sobre valores</option>
                         </select>
                         <label for="sponsor_tier">
-                            <i class="fas fa-medal"></i>
+                            <Icon name="medal" />
                             Nível de Patrocínio
                         </label>
                     </div>
@@ -133,7 +140,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                     <div class="form-group">
                         <textarea id="sponsor_message" name="message" rows="4" required></textarea>
                         <label for="sponsor_message">
-                            <i class="fas fa-comment"></i>
+                            <Icon name="comment" />
                             Mensagem / Proposta
                         </label>
                     </div>
@@ -147,17 +154,17 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order -
                 </div>
 
                 <button type="submit" class="btn-sponsor-submit">
-                    <i class="fas fa-paper-plane"></i>
+                    <Icon name="paper-plane" />
                     <span>Enviar Proposta</span>
-                    <i class="fas fa-arrow-right"></i>
+                    <Icon name="arrow-right" />
                 </button>
             </form>
 
             <div class="sponsor-modal-footer">
                 <p>
-                    <i class="fas fa-lock"></i> Seus dados estão seguros
+                    <Icon name="lock" /> Seus dados estão seguros
                     <span class="separator">•</span>
-                    <i class="fas fa-reply-all"></i> Respondemos em até 24h
+                    <Icon name="reply-all" /> Respondemos em até 24h
                 </p>
             </div>
         </div>

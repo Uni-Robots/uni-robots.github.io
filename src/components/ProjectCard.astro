@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
 
 interface Props {
     project: CollectionEntry<'projects'>;
@@ -9,7 +10,7 @@ const { title, description, icon, easterEgg } = Astro.props.project.data;
 ---
 
 <div class="project-card" data-easter-egg={easterEgg ? '' : undefined}>
-    <div class="project-icon"><i class={icon}></i></div>
+    <div class="project-icon"><Icon name={icon} /></div>
     <h3>{title}</h3>
     <p>{description}</p>
 </div>

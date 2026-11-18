@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
 import logo from '../assets/logo.png';
 ---
 
@@ -6,7 +8,7 @@ import logo from '../assets/logo.png';
     <div class="container">
         <div class="footer-content">
             <div class="footer-logo">
-                <img src={logo.src} alt="UniRobot">
+                <Image src={logo} alt="UniRobot" width={50} widths={[50, 100]} sizes="50px" />
                 <p>Construindo o futuro com robótica e inovação.</p>
             </div>
             <div class="footer-links">
@@ -32,7 +34,7 @@ import logo from '../assets/logo.png';
                 <p>Receba nossas novidades</p>
                 <form id="newsletterForm">
                     <input type="email" name="email" placeholder="Seu e-mail" required>
-                    <button type="submit" aria-label="Inscrever"><i class="fas fa-paper-plane"></i></button>
+                    <button type="submit" aria-label="Inscrever"><Icon name="paper-plane" /></button>
                 </form>
             </div>
         </div>

@@ -1,0 +1,19 @@
+---
+// Ícone SVG inline (Font Awesome Free 6.4.0, CC BY 4.0 — ver src/icons/LICENSE.txt).
+// Mantém o <i> como wrapper para o CSS existente (.social-card i, .info-item i, ...) continuar valendo.
+const icons = import.meta.glob<{ default: (props: Record<string, unknown>) => unknown }>('../icons/*.svg', { eager: true });
+
+interface Props {
+    name: string;
+    class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const Svg = icons[`../icons/${name}.svg`]?.default;
+if (!Svg) {
+    const available = Object.keys(icons).map((p) => p.replace(/^.*\/|\.svg$/g, '')).join(', ');
+    throw new Error(`Ícone "${name}" não existe em src/icons/. Disponíveis: ${available}`);
+}
+---
+
+<i class:list={['icon', className]} aria-hidden="true"><Svg /></i>

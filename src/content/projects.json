@@ -3,7 +3,7 @@
         "id": "pimpolho",
         "title": "Pimpolho",
         "description": "Seguidor de Linha",
-        "icon": "fas fa-shoe-prints",
+        "icon": "shoe-prints",
         "order": 1,
         "easterEgg": false
     },
@@ -11,7 +11,7 @@
         "id": "hockey-league",
         "title": "Hockey League",
         "description": "Hockey Micro",
-        "icon": "fas fa-hockey-puck",
+        "icon": "hockey-puck",
         "order": 2,
         "easterEgg": false
     },
@@ -19,7 +19,7 @@
         "id": "tribagual",
         "title": "Tribagual",
         "description": "Sumô Mini 500g (Auto)",
-        "icon": "fas fa-dumbbell",
+        "icon": "dumbbell",
         "order": 3,
         "easterEgg": true
     },
@@ -27,7 +27,7 @@
         "id": "taz",
         "title": "Taz",
         "description": "Sumô Lego 1kg (Auto)",
-        "icon": "fas fa-cubes",
+        "icon": "cubes",
         "order": 4,
         "easterEgg": true
     },
@@ -35,7 +35,7 @@
         "id": "uninho",
         "title": "Uninho",
         "description": "Sumô Lego 1kg (Auto)",
-        "icon": "fas fa-cubes",
+        "icon": "cubes",
         "order": 5,
         "easterEgg": true
     },
@@ -43,7 +43,7 @@
         "id": "perry-o-ornintorrinco",
         "title": "Perry o Ornintorrinco",
         "description": "Artbot",
-        "icon": "fas fa-paintbrush",
+        "icon": "paintbrush",
         "order": 6,
         "easterEgg": false
     }
