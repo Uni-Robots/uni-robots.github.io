@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+// Faixa de logos dos patrocinadores que corre sozinha (marquee em CSS).
+// A lista é renderizada duas vezes: a animação desloca o trilho em -50% e a cópia
+// cobre o buraco, então o laço não tem emenda. A cópia fica oculta para leitores de tela.
+const sponsors = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+
+// Caixa do logo: até 150 x 60 (logo alto é limitado pela altura).
+const shownWidth = (logo: ImageMetadata) => Math.round(Math.min(150, (60 * logo.width) / logo.height));
+
+// Velocidade constante, independente de quantos patrocinadores houver.
+const duration = `${sponsors.length * 4.5}s`;
+---
+
+<section class="container secao patrocinio" aria-labelledby="patrocinio-titulo">
+    <div class="cabeca">
+        <h2 id="patrocinio-titulo">Quem apoia a UniRobot</h2>
+        <a href="/patrocinadores.html" class="link-acao">Conheça os patrocinadores</a>
+    </div>
+
+    <div class="faixa" style={`--duracao: ${duration}`}>
+        <div class="trilho">
+            {[false, true].map((copia) => (
+                <ul class="logos" aria-hidden={copia ? 'true' : undefined}>
+                    {sponsors.map(({ data }) => (
+                        <li>
+                            <Image
+                                src={data.logo}
+                                alt={copia ? '' : data.alt}
+                                width={shownWidth(data.logo)}
+                                densities={[1, 2]}
+                                loading="lazy"
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ))}
+        </div>
+    </div>
+
+    <button type="button" class="pausar" aria-pressed="false">Pausar animação</button>
+</section>
+
+<style>
+    .cabeca {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Bordas esmaecidas: os logos entram e saem sem corte seco */
+    .faixa {
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .trilho {
+        display: flex;
+        width: max-content;
+        animation: correr var(--duracao) linear infinite;
+    }
+
+    /* Pausa ao passar o mouse e pelo botão */
+    .faixa:hover .trilho,
+    .patrocinio:has(.pausar[aria-pressed='true']) .trilho {
+        animation-play-state: paused;
+    }
+
+    .logos {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+
+    /* Espaço à direita de cada item (e não `gap`), para que -50% caia exatamente no início da cópia */
+    .logos li {
+        display: grid;
+        place-items: center;
+        width: 12rem;
+        height: 6.5rem;
+        margin-right: 1rem;
+        padding: 1rem;
+        background: var(--papel); /* os logos foram feitos para fundo claro */
+    }
+
+    .logos :global(img) {
+        max-height: 60px;
+        width: auto;
+        height: auto;
+    }
+
+    .pausar {
+        margin-top: 0.75rem;
+        padding: 0.25rem 0;
+        background: none;
+        border: 0;
+        color: var(--neblina);
+        font-size: 0.875rem;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+    }
+
+    .pausar:hover {
+        color: var(--giz);
+    }
+
+    @keyframes correr {
+        to { transform: translateX(-50%); }
+    }
+
+    /* Sem animação: mostra a lista uma vez, quebrando em linhas */
+    @media (prefers-reduced-motion: reduce) {
+        .faixa {
+            mask-image: none;
+        }
+
+        .trilho {
+            width: auto;
+            animation: none;
+        }
+
+        .logos {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logos li {
+            margin-right: 0;
+        }
+
+        .logos[aria-hidden='true'],
+        .pausar {
+            display: none;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .logos li {
+            width: 9.5rem;
+            height: 5.5rem;
+        }
+
+        .logos :global(img) {
+            max-height: 48px;
+        }
+    }
+</style>
+
+<script>
+    for (const botao of document.querySelectorAll<HTMLButtonElement>('.patrocinio .pausar')) {
+        botao.addEventListener('click', () => {
+            const pausado = botao.getAttribute('aria-pressed') !== 'true';
+            botao.setAttribute('aria-pressed', String(pausado));
+            botao.textContent = pausado ? 'Retomar animação' : 'Pausar animação';
+        });
+    }
+</script>

@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Arena from '../components/Arena.astro';
 import RobotSheet from '../components/RobotSheet.astro';
 import ResenhaEasterEgg from '../components/ResenhaEasterEgg.astro';
+import SponsorCarousel from '../components/SponsorCarousel.astro';
 import logo from '../assets/logo.png';
 
 const robots = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
@@ -22,7 +23,7 @@ const organization = {
     url: Astro.site?.href,
     logo: new URL(logoPng.src, Astro.site).href,
     email: 'equipe.unirobot@gmail.com',
-    foundingDate: '2020',
+    foundingDate: '2024',
     address: {
         '@type': 'PostalAddress',
         addressLocality: 'São José dos Pinhais',
@@ -35,7 +36,7 @@ const organization = {
 
 <BaseLayout
     title="Início"
-    description="UniRobot: equipe universitária de robótica competitiva de São José dos Pinhais (PR). Robôs de sumô, seguidor de linha, hockey e artbot desde 2020."
+    description="UniRobot: equipe universitária de robótica competitiva de São José dos Pinhais (PR). Robôs de sumô, seguidor de linha, hockey e artbot desde 2024."
 >
     <script type="application/ld+json" slot="head" set:html={JSON.stringify(organization)} />
 
@@ -44,7 +45,7 @@ const organization = {
             <h1>Robôs de competição feitos por estudantes</h1>
             <p>
                 A UniRobot é a equipe de robótica de estudantes universitários de São José dos Pinhais (PR).
-                Desde 2020 projetamos, montamos e programamos robôs para sumô, seguidor de linha, hockey e artbot.
+                Desde 2024 projetamos, montamos e programamos robôs para sumô, seguidor de linha, hockey e artbot.
             </p>
             <div class="acoes">
                 <a href="/projetos.html" class="btn">Ver os robôs</a>
@@ -53,6 +54,8 @@ const organization = {
         </div>
         <Arena />
     </section>
+
+    <SponsorCarousel />
 
     <section class="container secao" aria-labelledby="robos-titulo">
         <div class="cabeca">
